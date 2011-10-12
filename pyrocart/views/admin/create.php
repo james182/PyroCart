@@ -20,8 +20,8 @@ $(function() {
 	    </li>
 
 	    <li class="<?php echo alternator('', 'even'); ?>">
-				<label for="refNo">Product Code</label>
-				<input type="text" id="refNo" name="refNo" maxlength="100" value="<?php echo $product->refNo; ?>" class="text" />
+				<label for="product_code">Product Code</label>
+				<input type="text" id="product_code" name="refNo" maxlength="100" value="<?php echo $product->product_code; ?>" class="text" />
 	    </li>
             
             <?php if($this->settings->products_featured == 1)

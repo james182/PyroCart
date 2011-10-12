@@ -15,7 +15,7 @@ class Pyrocart_m extends CI_Model
         $this->load->library('cart');
     }
 
-    function getProducts($params = array(),$front_end = false)
+    function get_products($params = array(),$front_end = false)
     {
         $s_category = $this->input->get_post('s_category');
         
@@ -32,7 +32,7 @@ class Pyrocart_m extends CI_Model
                 }
 
                 foreach($child_in as $cc){
-                    $this->db->or_where(array('products.categoryId'=>$cc));
+                    $this->db->or_where(array('pyrocart.categoryId'=>$cc));
                 }
             }
         }
@@ -55,7 +55,7 @@ class Pyrocart_m extends CI_Model
             }
             
             foreach($child_in as $cc){
-                $this->db->or_where(array('products.categoryId'=>$cc));
+                $this->db->or_where(array('pyrocart.categoryId'=>$cc));
             }
         }
 
@@ -65,19 +65,19 @@ class Pyrocart_m extends CI_Model
         if(isset($params['limit']) && is_int($params['limit'])) $this->db->limit($params['limit']);
         elseif(isset($params['limit']) && is_array($params['limit'])) $this->db->limit($params['limit'][0], $params['limit'][1]);
 
-        if(@@$_REQUEST['refNo']!='') $this->db->where(array('products.refNo'=>$_REQUEST['refNo']));
+        if(@@$_REQUEST['refNo']!='') $this->db->where(array('pyrocart.refNo'=>$_REQUEST['refNo']));
 
 
 
         if(@@$_REQUEST['price_min']!='' and @@$_REQUEST['price_max']!='')
                 {
-                        $this->db->where("products.price between ".$_REQUEST['price_min']." and ".$_REQUEST['price_max']);
+                        $this->db->where("pyrocart.price between ".$_REQUEST['price_min']." and ".$_REQUEST['price_max']);
                 }
 
 
 
-        $this->db->select('products.*');
-        $this->db->from('products');
+        $this->db->select('pyrocart.*');
+        $this->db->from('pyrocart');
         //$this->db->join('product_images', 'products.id = product_images.product_id');
         if($front_end==true){
                 //$curdate = date('Y-m-d H:i:s');
@@ -126,7 +126,7 @@ class Pyrocart_m extends CI_Model
 			if(!$parentid){return array();}
 
 			$this->db->where(array('parentid'=>$parentid));
-			$query = $this->db->get('product_categories');
+			$query = $this->db->get('pyrocart_categories');
 
 		     if ($query->num_rows() == 0)
 				{
@@ -137,13 +137,13 @@ class Pyrocart_m extends CI_Model
 					return $query->result();
 				}
 		}
-	function getCategories($params = array())
+	function get_categories($params = array())
 	{
 		if(isset($params['order'])) $this->db->order_by($params['order']);
 
 
 
-		$query = $this->db->get('product_categories');
+		$query = $this->db->get('pyrocart_categories');
 		if ($query->num_rows() == 0)
 		{
 			return array();
@@ -153,14 +153,14 @@ class Pyrocart_m extends CI_Model
 			return $query->result();
 		}
 	}
-	function countCategories($params = array())
+	function count_categories($params = array())
 	{
-		return $this->db->count_all_results('product_categories');
+		return $this->db->count_all_results('pyrocart_categories');
 	}
 
-	function getProduct($id = '')
+	function get_product($id = '')
 	{
-		$query = $this->db->get_where('products', array('id'=>$id));
+		$query = $this->db->get_where('pyrocart', array('id'=>$id));
 		if ($query->num_rows() == 0)
 		{
 			return FALSE;
@@ -171,9 +171,9 @@ class Pyrocart_m extends CI_Model
 		}
 	}
 
-	function getCategory($id = '')
+	function get_category($id = '')
 	{
-		$query = $this->db->get_where('product_categories', array('id'=>$id));
+		$query = $this->db->get_where('pyrocart_categories', array('id'=>$id));
 		if ($query->num_rows() == 0)
 		{
 			return FALSE;
@@ -184,7 +184,7 @@ class Pyrocart_m extends CI_Model
 		}
 	}
 
-	function countProducts($params = array())
+	function count_products($params = array())
 	{
 
 		$s_category = $this->input->get_post('s_category');
@@ -210,26 +210,26 @@ class Pyrocart_m extends CI_Model
 		if($s_name){$this->db->like('title',$s_name);}
 
 		$this->db->select('id');
-		$query = $this->db->get('products');
+		$query = $this->db->get('pyrocart');
 
 		return $query->num_rows();
 
 	}
-	function editProduct($id,$input = array())
+	function edit_product($id,$input = array())
 	{
 		$this->load->helper('date');
 		$this->load->library('helpfunctions');
 
-		$DATA = $this->helpfunctions->make_insert_array('products',$input);
+		$DATA = $this->helpfunctions->make_insert_array('pyrocart',$input);
 
 		$this->db->where('id', $id);
-		$this->db->update('products', $DATA);
+		$this->db->update('pyrocart', $DATA);
 		$insertId = $id;
 		//$this->upload_image($input,$insertId,TRUE);
 
 		return TRUE;
 	}
-	function newProduct($input = array())
+	function new_product($input = array())
 	{
 
 		$this->load->helper('date');
@@ -247,54 +247,52 @@ class Pyrocart_m extends CI_Model
 	}
 
 
-	function newProductCategory($input = array())
+	function new_product_category($input = array())
 	{
-		$this->load->helper('date');
-		$this->load->library('helpfunctions');
+		unset($input['btnAction']);
+		
+                $this->db->insert('pyrocart_categories', $input);
 
-		$DATA = $this->helpfunctions->make_insert_array('product_categories',$input);
-		$this->db->insert('product_categories', $DATA);
-
-		$insertId = $this->db->insert_id();
-		return $insertId;
+		$insert_id = $this->db->insert_id();
+		return $insert_id;
 	}
-	function editProductCategory($id,$input = array())
+	function edit_product_category($id,$input = array())
 	{
 		$this->load->helper('date');
 		$this->load->library('helpfunctions');
 
-		$DATA = $this->helpfunctions->make_insert_array('product_categories',$input);
+		$DATA = $this->helpfunctions->make_insert_array('pyrocart_categories',$input);
 
 		$this->db->where('id', $id);
-		$this->db->update('product_categories', $DATA);
+		$this->db->update('pyrocart_categories', $DATA);
 		return true;
 
 	}
 
-	function makeCategoriesDropDown()
-		{
-			$query = $this->db->get('product_categories');
-			if ($query->num_rows() == 0)
-			{
-				return array();
-			}
-			else
-			{
+	function make_categories_dropDown()
+        {
+            $query = $this->db->get('pyrocart_categories');
+            if ($query->num_rows() == 0)
+            {
+                return array();
+            }
+            else
+            {
 
-				$data  = array(''=>'Select');
-				foreach($query->result() as $row)
-					{
+                $data  = array(''=>'Select');
+                foreach($query->result() as $row)
+                {
 
-						$data[$row->id] = $row->name;
+                    $data[$row->id] = $row->name;
 
-					}
+                }
 
-				return $data;
-			}
+                return $data;
+            }
 
-		}
+        }
 
-	function getProductCategories($params = array())
+	function get_product_categories($params = array())
 	{
 		if(isset($params['order'])) $this->db->order_by($params['order']);
 
@@ -306,7 +304,7 @@ class Pyrocart_m extends CI_Model
 
 
 
-		$query = $this->db->get('product_categories');
+		$query = $this->db->get('pyrocart_categories');
 		if ($query->num_rows() == 0)
 		{
 			return array();
@@ -318,11 +316,11 @@ class Pyrocart_m extends CI_Model
 		//return $this->db->get('portfolio')->result();
 	}
 
-	function getParentCategories()
+	function get_parent_categories()
 		{
 
-			$this->db->where(array('parentid IS NULL'=>NULL));
-			$query = $this->db->get('product_categories');
+			$this->db->where(array('parent_id IS NULL'=>NULL));
+			$query = $this->db->get('pyrocart_categories');
 
 		     if ($query->num_rows() == 0)
 				{
@@ -334,9 +332,9 @@ class Pyrocart_m extends CI_Model
 				}
 		}
 
-	function getProductCategory($id = '')
+	function get_product_category($id = '')
 		{
-				$query = $this->db->get_where('product_categories', array('id'=>$id));
+				$query = $this->db->get_where('pyrocart_categories', array('id'=>$id));
 				if ($query->num_rows() == 0)
 				{
 					return FALSE;

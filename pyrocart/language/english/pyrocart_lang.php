@@ -1,6 +1,13 @@
 <?php
 
-// labels
+//Shortcut Titles
+$lang['pyrocart.add_title']				= 'Create Product';
+$lang['pyrocart.list_title'] 				= 'List Product';
+$lang['pyrocart.add_category']                          = 'Add Category';
+$lang['pyrocart.list_categories']                       = 'List Categories';
+$lang['pyrocart.list_orders']                           = 'List Orders';
+
+//Labels
 $lang['pyrocart.title']                                 = 'Title';
 $lang['pyrocart.price'] 				= 'Price';
 $lang['pyrocart.currency'] 				= 'Currency';
@@ -14,13 +21,9 @@ $lang['pyrocart.send'] 					= 'Send';
 $lang['pyrocart.export_title'] 				= 'Export Subscribers';
 $lang['pyrocart.subscribe'] 				= 'Subscribe';
 
-// titles
 
-$lang['pyrocart.add_title']				= 'Create Product';
-$lang['pyrocart.list_title'] 				= 'List pyrocart';
 
-// messages
-$lang['pyrocart.no_pyrocarts_error'] 			= 'There are no pyrocart.';
+//Messages
 $lang['letter_subscribed_success'] 			= 'Your have now subscribed. You should hear from us fairly soon when we send our the next pyrocart.';
 $lang['letter_subscripe_desc'] 				= 'Subscribe to our pyrocart to recieve emails and useful news articles.';
 $lang['letter_add_mail_success'] 			= 'This address has already been registered.';
@@ -31,9 +34,7 @@ $lang['letter_add_error'] 				= 'An error occured.';
 $lang['letter_sent_success'] 				= 'The pyrocart was sent.';
 $lang['letter_sent_error'] 				= 'An error occured.';
 
-$lang['pyrocart.addCategory']                           = 'Add category';
 
-$lang['pyrocart.listCategories']                        = 'List categories';
 $lang['pyrocart.criteriaedit']                          = 'Edit';
 
 $lang['designs.title']                                  = 'Title';
@@ -41,8 +42,7 @@ $lang['designs.sku']                                    = 'SKU';
 $lang['designs.actions']                                = 'Actions';
 
 //create
-$lang['pyrocart.refNo']                                 = 'Product Code';
-
+$lang['pyrocart.product_code']                          = 'Product Code';
 $lang['pyrocart.description']                           = 'Description';
-$lang['pyrocart.categoryId']                            = 'Category';
+$lang['pyrocart.category_id']                           = 'Category';
 

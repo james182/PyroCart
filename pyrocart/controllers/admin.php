@@ -97,11 +97,12 @@ class Admin extends Admin_Controller
 	}
 
 
-	// Admin: Show pyrocart
+	// Admin: Show Products
 	function index()
 	{
-            $criterias = array(''=>'Select');
-            foreach($this->pyrocart_m->getCategories() as $criteria)
+            $criterias = array(''=>'Select Category');
+            
+            foreach($this->pyrocart_m->get_categories() as $criteria)
             {
                 $criterias[$criteria->id] = $criteria->name;
             }
@@ -111,11 +112,11 @@ class Admin extends Admin_Controller
             $this->template->set_partial('filters', 'admin/partials/search_product_form');
             
             // Create pagination links
-            $total_rows = $this->pyrocart_m->countproducts();
+            $total_rows = $this->pyrocart_m->count_products();
             $this->data->pagination = create_pagination('admin/pyrocart/index', $total_rows);
 
             // Using this data, get the relevant results
-            $this->data->products = $this->pyrocart_m->getproducts(array('order'=>'created_on DESC', 'limit' => $this->data->pagination['limit']));
+            $this->data->products = $this->pyrocart_m->get_products(array('order'=>'created_on DESC', 'limit' => $this->data->pagination['limit']));
 
             $this->template
                         ->append_metadata( js('functions.js', 'pyrocart') )
@@ -295,7 +296,7 @@ class Admin extends Admin_Controller
 
 
 		$categories = array(''=>'Select');
-		foreach($this->pyrocart_m->getCategories() as $criteria)
+		foreach($this->pyrocart_m->get_categories() as $criteria)
 		{
 			$categories[$criteria->id] = $criteria->name;
 		}
@@ -359,17 +360,17 @@ class Admin extends Admin_Controller
 
 
 
-	function delete($productid='')
+	function delete($product_id='')
 	{
 		if($productid==''){redirect('admin/pyrocart');}
 
-		$this->db->where('id', $productid);
+		$this->db->where('id', $product_id);
 		$this->db->delete('pyrocart');
 
 		redirect('admin/pyrocart');
 	}
 
-	function addProductCategory($id=FALSE)
+	function add_product_category($id=FALSE)
 	{
 		$this->load->library('form_validation');
 		$this->form_validation->_field_data=array();
@@ -381,8 +382,8 @@ class Admin extends Admin_Controller
 			),
 
 			array(
-				'field' => 'parentid',
-				'label' => lang('pyrocart.parentid'),
+				'field' => 'parent_id',
+				'label' => lang('pyrocart.parent_id'),
 				'rules'	=> 'trim'
 			));
 
@@ -391,40 +392,39 @@ class Admin extends Admin_Controller
 
 		if ($this->form_validation->run())
 		{
-			if ($this->pyrocart_m->newProductCategory($_POST))
+			if ($this->pyrocart_m->new_product_category($_POST))
 			{
 
-				$this->session->set_flashdata('success', sprintf(lang('category_add_success'), $this->input->post('name')));
-				redirect('admin/pyrocart/listCategories');
+                            $this->session->set_flashdata('success', sprintf(lang('category_add_success'), $this->input->post('name')));
+                            redirect('admin/pyrocart/list_categories');
 			}
 			else
 			{
-
-				$this->session->set_flashdata(array('error'=> lang('letter_add_error')));
+                            $this->session->set_flashdata(array('error'=> lang('pyrocart_add_error')));
 			}
 		}
 
-		if($id){$this->data->parentid=$id;}else{$this->data->parentid='';}
-		$this->data->categories = $this->pyrocart_m->makeCategoriesDropDown();
+		if($id){$this->data->parent_id=$id;}else{$this->data->parent_id='';}
+		$this->data->categories = $this->pyrocart_m->make_categories_dropDown();
 
 
-		$this->template->build('admin/addProductCategory', $this->data);
+		$this->template->build('admin/add_product_category', $this->data);
 	}
 
-	function listCategories()
+	function list_categories()
 		{
 
-			$total_rows = $this->pyrocart_m->countCategories();
+			$total_rows = $this->pyrocart_m->count_categories();
 			$this->data->pagination = create_pagination('admin/pyrocart/listCategories', $total_rows);
 
 			// Using this data, get the relevant results
-			$this->data->categories = $this->pyrocart_m->getProductCategories(array('limit' => $this->data->pagination['limit']));
-			$this->data->product_categories = $this->pyrocart_m->getParentCategories();
-			$this->template->build('admin/listCategories', $this->data);
+			$this->data->categories = $this->pyrocart_m->get_product_categories(array('limit' => $this->data->pagination['limit']));
+			$this->data->product_categories = $this->pyrocart_m->get_parent_categories();
+			$this->template->build('admin/list_categories', $this->data);
 
 		}
 
-	function editProductCategory($criteriaId=0)
+	function edit_product_category($criteriaId=0)
 	{
 
 		$this->data->criteriaId = $criteriaId;

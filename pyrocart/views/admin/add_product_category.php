@@ -1,6 +1,6 @@
 <h3>Add category</h3>
 
-<?php echo form_open_multipart('admin/products/addProductCategory', 'class="crud"'); ?>
+<?php echo form_open_multipart($this->uri->uri_string(), 'class="crud"'); ?>
 
 	<ol>
 		<li class="even">
@@ -9,8 +9,8 @@
 			<span class="required-icon tooltip"><?php echo lang('required_label');?></span>
 		</li>
 		<li class="even">
-				<label for="parentid">Parent category</label>
-				<?php echo form_dropdown('parentid', $categories, $parentid); ?>
+				<label for="parent_id">Parent category</label>
+				<?php echo form_dropdown('parent_id', $categories, $parent_id); ?>
 	    </li>
 	</ol>
 	<div class="float-right">
