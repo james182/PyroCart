@@ -1,0 +1,53 @@
+<html>
+<head>
+
+<!-- Load the Cloud Zoom CSS file -->
+<link href="cloud-zoom.css" rel="stylesheet" type="text/css" />
+
+<!-- You can load the jQuery library from the Google Content Network.
+Probably better than from your own server. -->
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+
+<!-- Load the Cloud Zoom JavaScript file -->
+<script type="text/JavaScript" src="cloud-zoom.1.0.2.min.js"></script>
+
+</head>
+    <body>
+        
+        <!--	
+        An anchor with class of 'cloud-zoom' should surround the small image.
+        The anchor's href should point to the big zoom image.
+        Any options can be specified in the rel attribute of the anchor.
+        Options should be specified in regular JavaScript object format,
+        but without the braces.
+        -->
+    	
+        <a href='/images/zoomengine/bigimage00.jpg' class = 'cloud-zoom' id='zoom1'
+            rel="adjustX: 10, adjustY:-4">
+            <img src="/images/zoomengine/smallimage.jpg" alt='' title="Optional title display" />
+        </a>
+        
+         
+        <!--	
+        You can optionally create a gallery by creating anchors with a class of 'cloud-zoom-gallery'.
+        The anchor's href should point to the big zoom image.
+        In the rel attribute you must specify the id of the zoom to use (useZoom: 'zoom1'),
+        and also the small image to use (smallImage: /images/....)
+        -->
+        
+        <a href='/images/zoomengine/bigimage00.jpg' class='cloud-zoom-gallery' title='Thumbnail 1'
+        	rel="useZoom: 'zoom1', smallImage: '/images/zoomengine/smallimage.jpg' ">
+        <img src="/images/zoomengine/tinyimage.jpg" alt = "Thumbnail 1"/></a>
+        
+        <a href='/images/zoomengine/bigimage01.jpg' class='cloud-zoom-gallery' title='Thumbnail 2'
+        	rel="useZoom: 'zoom1', smallImage: ' /images/zoomengine/smallimage-1.jpg'">
+        <img src="/images/zoomengine/tinyimage-1.jpg" alt = "Thumbnail 2"/></a>                  
+        
+        <a href='/images/zoomengine/bigimage02.jpg' class='cloud-zoom-gallery' title='Thumbnail 3'
+        	rel="useZoom: 'zoom1', smallImage: '/images/zoomengine/smallimage-2.jpg' ">
+        <img src="/images/zoomengine/tinyimage-2.jpg" alt = "Thumbnail 3"/></a>
+    
+    </body>
+</html>
+
+

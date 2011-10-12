@@ -1,0 +1,126 @@
+/*..... Common Styles here .....*/
+#wrapper{
+	width:940px;
+	margin:auto;
+	clear:both;
+}
+#container{
+	width:100%;
+	margin:47px auto 0;
+	clear:both;
+}
+
+.leftStyle{float:left;}
+.rightStyle{float:right;}
+
+/*..... LeftNav Styles here .....*/
+#navsidebar{ width: 235px; margin-right:10px; padding: 36px 0 0 0; }
+/*#navsidebar h2{font-size:12px; font-weight:bold; text-align:left; margin-left:11px;}*/
+
+#navsidebar #leftNav{ padding:15px 0 0 0;}
+/*#navsidebar #leftNav a{font-size:12px; padding-left:7px; background:url(../img/navbull.gif) 0 50% no-repeat;}*/
+
+#navsidebar #leftNav ul li { list-style-image:url('../img/bg-list.jpg'); margin-left:15px; font-size:12px; color:#333333; }
+#navsidebar #leftNav ul li a{ margin:0 0 8px;display:inline-block; }
+#navsidebar #leftNav ul ul{ padding-left:7px; }
+#navsidebar #leftNav ul ul li a{ margin:0 0 8px;display:inline-block; }
+
+/*..... Sidebar page Styles here .....*/
+#pagesidebar{ width:695px; padding: 0px 0px 35px 10px; }
+#pagesidebar h2{ font-size:24px; font-weight:bold; text-align:left; padding: 0px 0px 15px 10px; }
+#pagesidebar h2.detail{ font-size:24px; font-weight:bold; text-align:left; padding: 0px 0px 5px 10px; }
+#pagesidebar h4{ color:#000; font-weight:bold; font-size:11px; padding: 0px 0px 15px 12px; }
+
+#store-nav-wrapper { display: block; float:left; width:625px; }
+#store-nav-wrapper h2 { display: block; float:left; width:130px;  }
+#store-nav-wrapper ul.store_cat { display: block; float:left; width:400px; }
+#store-nav-wrapper ul.store_cat li { display: inline; margin-right:10px; background:url('../img/bg-list.jpg') 0 50% no-repeat; padding: 0 0 0 11px; }
+#store-nav-wrapper ul.store_cat sxsxli { display: block; float:left; text-align: left; width:80px; margin-left:15px; list-style-image:url('../img/bg-list.jpg'); }
+
+/*..... Products page Styles here .....*/
+.productrow{clear:both; overflow:hidden; margin-bottom:24px; padding: 0px 0px 0px 10px;}
+.probox{ width:140px; float:left; margin-right:15px; border:1px solid #ccc; border-radius:5px; -moz-border-radius:5px; }
+.product{ margin-bottom:5px; }
+.product div img { padding:5px; border-radius:5px; }
+
+/*.shadow{ width:139px; height:85px;background:url(../img/shadow.jpg) 0 0 no-repeat;}*/
+.shadowup { width:140px; text-align:center;  }
+.shadowup .p1{font-size:14px; font-weight:bold; padding:3px 0; }
+.shadowup .p2{font-size:12px; font-weight:bold; padding:3px 0; color:#e03b3b; }
+.shadowup .p3{font-size:12px; font-weight:bold; padding:3px 0; }
+.shadowup .p4{font-size:14px; font-weight:bold; padding:3px 0; color:#e03b3b; }
+.shadowdwn { height:35px; margin:0 0 10px 5px; }
+
+.price{text-align:center; color:#e03b3b; width:85px; font-size:14px; font-weight:bold;}
+
+
+
+/* --------------------------------- PRODUCT DETAIL -------------------------------- */
+
+#productdetail h2{margin-bottom:15px; margin-left:0;}
+#productdetail p{margin-bottom:17px; color:#444;}
+#productdetail{ padding: 0px 0px 15px 10px; }
+
+
+#add_to_cart_form { margin: 0;  width:360px; }
+#add_to_cart_form .description { border-top: 1px solid #ccc; padding: 10px; line-height: 20px; }
+#add_to_cart_form .description span { color:#777; font-weight: bold; }
+#add_to_cart_form .price { width:340px; text-align: left; color:#333; border-top: 1px solid #ccc; padding: 10px; }
+#add_to_cart_form .cart { border-top: 1px solid #ccc; border-bottom: 1px solid #ccc; padding: 10px; height: 29px; }
+#add_to_cart_form .cart span { color:#777; font-weight: bold; }
+
+h2#product_d_title{margin-bottom:25px;}
+.productview{ clear:both; display:block; margin-bottom:24px; }
+.col1{width:204px; height:204px;}
+.col2{width:64px; height:204px;}
+.col3{width:259px; height:204px;}
+.col2{margin-left:11px; margin-right:26px;}
+.col2 .raw{margin-bottom:7px;}
+
+.d1{font-size:16px; width:100%; font-weight:bold;text-align:left; margin-bottom:9px; color:#e03b3b;}
+.d2{font-size:18px; width:100%; font-weight:bold;text-align:left; margin-bottom:12px; clear:both;}
+.d3{height:26px; line-height:26px;}
+.d3 span{font-weight:bold; font-size:18px;}
+.d3 .qtybox{vertical-align:middle;background:url(../img/qty.jpg) 0 0 no-repeat; padding:0px 18px; height:26px; display:inline-block;}
+.pad{padding:18px 0  0 14px;}
+.enlarge{ display:inline-block; text-align:left; float:left; color:#444; margin-top:5px; clear:both; margin-left:65px;}
+
+
+/* --------------------------------- PRODUCT CART -------------------------------- */
+
+table.cart{ width:629px; border-collapse: collapse;}
+table.cart td{height:33px;}
+table.cart .pad td{ padding:0 19px;}
+.header{ font-weight:bold;font-size:14px;}
+.inputbox{width:53px; height:20px; border:solid 1px #979797;}
+tr.odd td{background:#f1f1f1;}
+table.total{height:auto; width:40%;}
+table.total td{ font-weight:bold;font-size:14px; height:20px; text-align:right; padding-right:70px; border:none!important;}
+table.cart .borderbottom td{border-bottom:#000 1px solid;}
+table.cart .bordertop td{border-top:#787878 1px solid;border-bottom:#000 1px solid;}
+
+table.cart .checkout { font-size:11px; font-weight:bold; text-align:center; }
+table.cart #actions { padding:9px 4px; }
+table.cart #actions .btn_empty { float:left; width:120px; height: 30px; background: #E0E0E0; }
+table.cart #actions .btn_shop { float:left; width:120px; height: 30px; background: #E0E0E0; }
+table.cart #actions .btn_checkout { float:right; width:120px; height: 30px; }
+
+.sold_out{background:url('../img/soldout138.gif');position:absolute;width:138px;height:138px;margin-top:-125px;}
+
+
+#payment { width:629px; }
+#payment fieldset { border:1px solid #CCCCCC; padding: 10px; margin-bottom: 20px; }
+#payment fieldset legend { padding:0 10px; font-weight: bold; }
+#payment p { display:block; list-style: none; width:300px; }
+#payment p label { width: 216px; display:block; font-weight: bold; margin:0 10px 0 0; }
+#payment p input { width:216px; border: 1px solid #ccc; padding:5px 0 5px 5px; border-radius: 3px; -o-border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;  }
+#payment p select { width:216px; }
+#payment p select.expdate { width:60px; margin:0 10px 0 0; }
+#payment p input.ccv { width:60px; margin:0 10px 0 0; }
+
+
+
+
+
+
+
