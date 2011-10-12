@@ -2,7 +2,7 @@
 
 class Pyrocart_m extends CI_Model
 {
-//var $email_from = 'admin@localhost'; // this is set by controller when used
+
     public function __construct()
     {
         // Call the parent's constructor

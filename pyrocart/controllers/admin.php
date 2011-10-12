@@ -10,11 +10,6 @@
 
 class Admin extends Admin_Controller
 {
-	/**
-	 * Validation rules
-	 *
-	 * @var array
-	 */
 	private $validation_rules = array();
 
 	/**
@@ -26,11 +21,12 @@ class Admin extends Admin_Controller
 	public function __construct()
 	{
 		parent::Admin_Controller();
+                
 		$this->load->model('pyrocart_m');
 		$this->load->model('images_m');
 		$this->lang->load('pyrocart');
 		$this->config->load('pyrocart_config');
-
+                
 		// Load and set the validation rules
 		$this->load->library('form_validation');
 		$this->validation_rules = array(
@@ -40,8 +36,8 @@ class Admin extends Admin_Controller
 				'rules'	=> 'trim|required'
 			),
 			array(
-				'field' => 'refNo',
-				'label' => lang('pyrocart.refNo'),
+				'field' => 'product_code',
+				'label' => lang('pyrocart.product_code'),
 				'rules' => 'trim'
 			),
 			array(
@@ -78,8 +74,8 @@ class Admin extends Admin_Controller
 			),
 
 			array(
-				'field' => 'categoryId',
-				'label' => lang('pyrocart.categoryId'),
+				'field' => 'category_id',
+				'label' => lang('pyrocart.category_id'),
 				'rules' => 'trim|required'
 			),
 
@@ -104,24 +100,26 @@ class Admin extends Admin_Controller
 	// Admin: Show pyrocart
 	function index()
 	{
+            $criterias = array(''=>'Select');
+            foreach($this->pyrocart_m->getCategories() as $criteria)
+            {
+                $criterias[$criteria->id] = $criteria->name;
+            }
+            
+            $this->data->product_categories = $criterias;
 
-		$criterias = array(''=>'Select');
-			foreach($this->pyrocart_m->getCategories() as $criteria)
-			{
-				$criterias[$criteria->id] = $criteria->name;
-			}
-		$this->data->product_categories = $criterias;
+            $this->template->set_partial('filters', 'admin/partials/search_product_form');
+            
+            // Create pagination links
+            $total_rows = $this->pyrocart_m->countproducts();
+            $this->data->pagination = create_pagination('admin/pyrocart/index', $total_rows);
 
-		$this->template->set_partial('filters', 'admin/partials/search_product_form');
-		// Create pagination links
-		$total_rows = $this->pyrocart_m->countpyrocart();
-		$this->data->pagination = create_pagination('admin/pyrocart/index', $total_rows);
+            // Using this data, get the relevant results
+            $this->data->products = $this->pyrocart_m->getproducts(array('order'=>'created_on DESC', 'limit' => $this->data->pagination['limit']));
 
-		// Using this data, get the relevant results
-		$this->data->pyrocart = $this->pyrocart_m->getpyrocart(array('order'=>'created_on DESC', 'limit' => $this->data->pagination['limit']));
-		$this->template
-		->append_metadata( js('functions.js', 'pyrocart') )
-		->build('admin/index', $this->data);
+            $this->template
+                        ->append_metadata( js('functions.js', 'pyrocart') )
+                        ->build('admin/index', $this->data);
 	}
 
 	function make_main_image($product_id,$image_id){
@@ -303,7 +301,7 @@ class Admin extends Admin_Controller
 		}
 		$this->data->categories = $categories;
 
-		$this->data->currency = $this->config->item('currency_list');
+		$this->data->currency = $this->settings->pyrocart_currency;
 
 
 		// Load WYSIWYG editor

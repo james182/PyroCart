@@ -18,16 +18,16 @@ class Products extends Public_Controller
 	public function __construct()
 	{
 		parent::Public_Controller();
-		$this->load->model('products_m');
+		$this->load->model('pyrocart_m');
 		$this->load->model('images_m');
-		$this->lang->load('products');
-		$this->config->load('products_config');
+		$this->lang->load('pyrocart');
+		$this->config->load('pyrocart_config');
 
-		$this->data->product_categories = $this->products_m->getParentCategories();
+		$this->data->product_categories = $this->pyrocart_m->getParentCategories();
 		$this->data->cat_breadcrumb = '';
                 //$this->template->set_layout('store.html');
 		$this->template->set_partial('sidebar', 'partials/sidebar.php',$this->data);
-		$this->template->append_metadata( css('products.css', 'products') );
+		$this->template->append_metadata( css('pyrocart.css', 'pyrocart') );
 
 	}
 
@@ -44,7 +44,7 @@ class Products extends Public_Controller
             {
                 //Enabled
                 $params['order']='created_on DESC';
-                $this->data->products = $this->products_m->getProducts($params,true);
+                $this->data->products = $this->pyrocart_m->getProducts($params,true);
                 $this->data->cat_breadcrumb = 'Featured';
                 $this->data->total_result = count($this->data->products );
             }else{
@@ -53,7 +53,7 @@ class Products extends Public_Controller
                 $params['order']='created_on DESC';
                 $params['categoryid'] = $categoryid;
                 if($categoryid!=''){
-                    $this->data->cat_breadcrumb = $this->products_m->getCatBC($categoryid);
+                    $this->data->cat_breadcrumb = $this->pyrocart_m->getCatBC($categoryid);
                 }
 
                 $this->data->products = $this->products_m->getProducts($params);

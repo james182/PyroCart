@@ -1,11 +1,11 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Productitems Module - Create and manage products
+ * Pyrocart module
  *
- * @author 	PyroCMS Development Team
- * @package 	PyroCMS
- * @subpackage 	Productitems
- * @category	Modules
+ * @author James Lawrie
+ * @package PyroCMS
+ * @subpackage pyrocart module
+ * @category Modules
  */
 class Cart extends Public_Controller
 {
@@ -18,18 +18,18 @@ class Cart extends Public_Controller
 	public function __construct()
 	{
 		parent::Public_Controller();
-		$this->load->model('products_m');
+		$this->load->model('pyrocart_m');
 		$this->load->model('images_m');
 		$this->load->model('cart_m');
-		$this->lang->load('products');
-		$this->config->load('products_config');
+		$this->lang->load('pyrocart');
+		$this->config->load('pyrocart_config');
 		$this->load->library('cart');
 		$this->data->product_categories = $this->products_m->getParentCategories();
 		$this->data->cat_breadcrumb = '';
                 //$this->template->set_layout('store.html');
 		$this->template->set_partial('sidebar', 'partials/sidebar.php',$this->data);
-                $this->template->append_metadata( js('cart.js', 'products') );
-                $this->template->append_metadata( css('products.css', 'products') );
+                $this->template->append_metadata( js('cart.js', 'pyrocart') );
+                $this->template->append_metadata( css('pyrocart.css', 'pyrocart') );
 	}
 
 	/**
@@ -45,7 +45,7 @@ class Cart extends Public_Controller
 
                 // Check if user has javascript enabled
                 if($this->input->post('ajax') != '1'){
-                        redirect('products/cart/show_cart'); // If javascript is not enabled, reload the page with new data
+                        redirect('pyrocart/cart/show_cart'); // If javascript is not enabled, reload the page with new data
                 }else{
                         echo 'true'; // If javascript is enabled, return true, so the cart gets updated
                 }
@@ -54,7 +54,7 @@ class Cart extends Public_Controller
 
 	function update_cart(){
 		$this->cart_m->validate_update_cart();
-		redirect('products/cart/show_cart');
+		redirect('pyrocart/cart/show_cart');
 	}
         
         

@@ -1,4 +1,4 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
+p<?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 
 class Images_m extends CI_Model
 {
@@ -7,7 +7,7 @@ class Images_m extends CI_Model
 	{
 		// Call the parent's constructor
 		parent::__construct();
-		$this->config->load('products/products_config');
+		$this->config->load('pyrocart/pyrocart_config');
 		$this->load->library('upload');
 		$this->load->library('image_lib');
 	}
@@ -18,7 +18,7 @@ class Images_m extends CI_Model
 	{
 		$DATA['name']=$input['name'];
 		$DATA['product_id']=$product_id;
-		$this->db->insert('product_images', $DATA);
+		$this->db->insert('pyrocart_images', $DATA);
 		$insertId = $this->db->insert_id();
 		$this->upload_image($input,$insertId);
 
@@ -29,30 +29,30 @@ class Images_m extends CI_Model
 	{
 		$DATA['name']=$input['name'];
 		$this->db->where('id',$image_id);
-		$this->db->update('product_images', $DATA);
+		$this->db->update('pyrocart_images', $DATA);
 		$this->upload_image($input,$image_id,TRUE);
 
 		return $image_id;
 	}
 	function get_product_image($image_id)
 		{
-			$query = $this->db->get_where('product_images',array('id'=>$image_id));
+			$query = $this->db->get_where('pyrocart_images',array('id'=>$image_id));
 
 			return $query->first_row();
 		}
 	function get_admin_product_images($product_id)
 		{
 
-			$query = $this->db->get_where('product_images',array('product_id'=>$product_id));
+			$query = $this->db->get_where('pyrocart_images',array('product_id'=>$product_id));
 			return $query->result();
 
 		}
 	function get_product_images_details($product_id)
 		{
-			$this->db->select('product_images.*');
-			$this->db->from('product_images');
+			$this->db->select('pyrocart_images.*');
+			$this->db->from('pyrocart_images');
 			//$this->db->join('product_designs','product_images.design = product_designs.sku and product_images.product_id = product_designs.product_id');
-			$this->db->where('product_images.product_id',$product_id);
+			$this->db->where('pyrocart_images.product_id',$product_id);
 			$query = $this->db->get();
 			return $query->result();
 
@@ -60,10 +60,10 @@ class Images_m extends CI_Model
 	function get_product_images($product_id,$main=0)
 		{
 
-			$query = $this->db->get_where('product_images',array('product_id'=>$product_id,'mainImage'=>$main));
+			$query = $this->db->get_where('pyrocart_images',array('product_id'=>$product_id,'mainImage'=>$main));
 			if($main==1 and $query->num_rows()==0)
 				{
-					$query = $this->db->get_where('product_images',array('product_id'=>$product_id,'mainImage'=>0));
+					$query = $this->db->get_where('pyrocart_images',array('product_id'=>$product_id,'mainImage'=>0));
 				}
 			return $query->result();
 

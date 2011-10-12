@@ -21,18 +21,18 @@ class Paypal extends Public_Controller {
 	{
 		parent::Public_Controller();
 		$this->load->library('paypallib');
-		$this->load->model('products_m');
+		$this->load->model('pyrocart_m');
 		$this->load->model('images_m');
                 $this->load->model('checkout_m');
-			$this->load->model('cart_m');
-		$this->lang->load('products');
-		$this->config->load('products_config');
+		$this->load->model('cart_m');
+		$this->lang->load('pyrocart');
+		$this->config->load('pyrocart_config');
 
-		$this->data->product_categories = $this->products_m->getParentCategories();
+		$this->data->product_categories = $this->pyrocart_m->getParentCategories();
 		$this->data->cat_breadcrumb = '';
-                //$this->template->set_layout('store.html');
+                //$this->template->set_layout('pyrocart.html');
 		$this->template->set_partial('sidebar', 'partials/sidebar.php',$this->data);
-                $this->template->append_metadata( css('products.css', 'products') );
+                $this->template->append_metadata( css('pyrocart.css', 'pyrocart') );
 	}
 
 	public function index()

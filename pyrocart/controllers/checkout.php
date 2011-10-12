@@ -24,7 +24,7 @@ class checkout extends Public_Controller
 		{
 
 			//$this->orders_m->process_order();
-			//redirect('products/cart/show_cart');
+			//redirect('pyrocart/cart/show_cart');
 
 
 			$API_UserName=$this->config->item('API_USERNAME');

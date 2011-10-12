@@ -25,13 +25,13 @@ class Admin_orders extends Admin_Controller
 	public function __construct()
 	{
 		parent::Admin_Controller();
-		$this->load->model('products_m');
+		$this->load->model('pyrocart_m');
 		$this->load->model('images_m');
 		$this->load->model('orders_m');
-		$this->lang->load('products');
-		$this->config->load('products_config');
+		$this->lang->load('pyrocart');
+		$this->config->load('pyrocart_config');
 		$this->template->set_partial('shortcuts', 'admin/partials/shortcuts');
-		$this->template->append_metadata(js('form.js', 'products'));
+		$this->template->append_metadata(js('form.js', 'pyrocart'));
 
 		// Load and set the validation rules
 		$this->load->library('form_validation');
@@ -115,12 +115,12 @@ class Admin_orders extends Admin_Controller
 		$this->template->set_partial('filters', 'admin/partials/search_order_form');
 		// Create pagination links
 		$total_rows = $this->orders_m->countOrders();
-		$this->data->pagination = create_pagination('products/orders/admin', $total_rows);
+		$this->data->pagination = create_pagination('pyrocart/orders/admin', $total_rows);
 
 		// Using this data, get the relevant results
 		$this->data->orders = $this->orders_m->getOrders(array('order'=>'created_on DESC', 'limit' => $this->data->pagination['limit']));
 		$this->template
-		->append_metadata( js('functions.js', 'products') )
+		->append_metadata( js('functions.js', 'pyrocart') )
 		->build('admin/orders/index', $this->data);
 	}
 
@@ -140,7 +140,7 @@ class Admin_orders extends Admin_Controller
 				if ($this->orders_m->editOrder($id,$_POST))
 				{
 					$this->session->set_flashdata('success', sprintf('Successfulle edited order from', $this->input->post('firstName')));
-					redirect('products/orders/admin');
+					redirect('pyrocart/orders/admin');
 				}
 				else
 				{
@@ -162,12 +162,12 @@ class Admin_orders extends Admin_Controller
 				//$this->data->productitem =& $productitem;
 				$this->template->append_metadata( $this->load->view('fragments/wysiwyg', $this->data, TRUE) );
 				$this->template
-				->append_metadata( js('form.js', 'products') )
+				->append_metadata( js('form.js', 'pyrocart') )
 				->build('admin/orders/manage', $this->data);
 			}
 			else
 			{
-				redirect('products/orders/admin');
+				redirect('pyrocart/orders/admin');
 			}
 		}
 
