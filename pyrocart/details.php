@@ -378,43 +378,112 @@ class Module_Pyrocart extends Module {
                 (5,2,'Air Mail',0.75,1.00,30.75);
         ";
         
+        //Settings
+        $settings_pyrocart_currency = array(
+            'slug' => 'pyrocart_currency',
+            'title' => 'Currency',
+            'description' => 'Select type of currency',
+            'default' => 'Dollars',
+            'value' => 'Dollars',
+            'type' => 'text',
+            'options' => 'Dollars=Dollars|Euros=Euros|Pounds=Pounds',
+            'is_required' => 1,
+            'is_gui' => 1,
+            'module' => 'Pyrocart'
+        );
+        $settings_pyrocart_featured = array(
+            'slug' => 'pyrocart_featured',
+            'title' => 'Enable Featured',
+            'description' => 'Enable or Disable featured products',
+            'default' => '1',
+            'value' => '0',
+            'type' => 'radio',
+            'options' => '0=Disabled|1=Enabled',
+            'is_required' => 1,
+            'is_gui' => 1,
+            'module' => 'Pyrocart'
+        );
+        $settings_pyrocart_handling_price = array(
+            'slug' => 'pyrocart_handling_price',
+            'title' => 'Handling Price $',
+            'description' => 'Set the handling price',
+            'default' => '0',
+            'value' => '2.00',
+            'type' => 'text',
+            'options' => '',
+            'is_required' => 1,
+            'is_gui' => 1,
+            'module' => 'Pyrocart'
+        );
+        $settings_pyrocart_timer = array(
+            'slug' => 'pyrocart_timer',
+            'title' => 'Product Timer',
+            'description' => 'Counts down the time a product is available for',
+            'default' => '0',
+            'value' => '0',
+            'type' => 'radio',
+            'options' => '0=Disabled|1=Enabled',
+            'is_required' => 1,
+            'is_gui' => 1,
+            'module' => 'Pyrocart'
+        );
+        $settings_pyrocart_weight = array(
+            'slug' => 'pyrocart_weight',
+            'title' => 'Product Weight',
+            'description' => 'The weight of a product - for calculating shipping prices',
+            'default' => '1',
+            'value' => '0',
+            'type' => 'radio',
+            'options' => '0=Disabled|1=Enabled',
+            'is_required' => 1,
+            'is_gui' => 1,
+            'module' => 'Pyrocart'
+        );
         
 
-            if($this->db->query($pyrocart)&&
-                    $this->db->query($pyrocart_categories)&&
-                    $this->db->query($pyrocart_orders)&&
-                    $this->db->query($pyrocart_order_items)&&
-                    $this->db->query($pyrocart_countries)&&
-                    $this->db->query($pyrocart_shipping_fixed)&&
-                    $this->db->query($pyrocart_shipping_weight)&&
-                    $this->db->query($pyrocart_states)&&
-                    $this->db->query($pyrocart_images)&&
-                    (is_dir('uploads/pyrocart') OR mkdir('uploads/pyrocart',0777,TRUE)))
-            {
-                    if(is_dir('uploads/pyrocart/full') OR mkdir('uploads/pyrocart/full',0777,TRUE)){
-                            // created full
-                    }
-                    if(is_dir('uploads/pyrocart/thumbs') OR mkdir('uploads/pyrocart/thumbs',0777,TRUE)){
-                            // created thumbs
-                    }
-                    return TRUE;
+        if($this->db->query($pyrocart)&&
+            $this->db->query($pyrocart_categories)&&
+            $this->db->query($pyrocart_orders)&&
+            $this->db->query($pyrocart_order_items)&&
+            $this->db->query($pyrocart_countries)&&
+            $this->db->query($pyrocart_shipping_fixed)&&
+            $this->db->query($pyrocart_shipping_weight)&&
+            $this->db->query($pyrocart_states)&&
+            $this->db->query($pyrocart_images)&&
+
+            $this->db->insert('settings', $settings_pyrocart_currency) &&
+            $this->db->insert('settings', $settings_pyrocart_currency) &&
+            $this->db->insert('settings', $settings_pyrocart_currency) &&
+            $this->db->insert('settings', $settings_pyrocart_currency) &&
+            $this->db->insert('settings', $settings_pyrocart_currency) &&
+
+            (is_dir('uploads/pyrocart') OR mkdir('uploads/pyrocart',0777,TRUE)) )
+        {
+            if(is_dir('uploads/pyrocart/full') OR mkdir('uploads/pyrocart/full',0777,TRUE)){
+                    // created full
             }
+            if(is_dir('uploads/pyrocart/thumbs') OR mkdir('uploads/pyrocart/thumbs',0777,TRUE)){
+                    // created thumbs
+            }
+            return TRUE;
+        }
     }
 
     public function uninstall()
     {
-            if($this->dbforge->drop_table('pyrocart')&&
-                    $this->dbforge->drop_table('pyrocart_categories')&&
-                    $this->dbforge->drop_table('pyrocart_images')&&
-                    $this->dbforge->drop_table('pyrocart_orders')&&
-                    $this->dbforge->drop_table('pyrocart_order_items')&&
-                    $this->dbforge->drop_table('pyrocart_countries')&&
-                    $this->dbforge->drop_table('pyrocart_shipping_fixed')&&
-                    $this->dbforge->drop_table('pyrocart_shipping_weight')&&
-                    $this->dbforge->drop_table('pyrocart_states'))
-            {
-                    return TRUE;
-            }
+        if($this->dbforge->drop_table('pyrocart')&&
+            $this->dbforge->drop_table('pyrocart_categories')&&
+            $this->dbforge->drop_table('pyrocart_images')&&
+            $this->dbforge->drop_table('pyrocart_orders')&&
+            $this->dbforge->drop_table('pyrocart_order_items')&&
+            $this->dbforge->drop_table('pyrocart_countries')&&
+            $this->dbforge->drop_table('pyrocart_shipping_fixed')&&
+            $this->dbforge->drop_table('pyrocart_shipping_weight')&&
+            $this->dbforge->drop_table('pyrocart_states')&&
+            $this->db->delete('settings', array('module' => 'Pyrocart')) )
+        {
+            return TRUE;
+        }
     }
 
     public function upgrade($old_version)
@@ -428,7 +497,7 @@ class Module_Pyrocart extends Module {
             // Return a string containing help info
             // You could include a file and return it here.
             return "<h4>Overview</h4>
-            <p>The pyrocart module is a E-Commerce Module.</p>";
+            <p>The Pyrocart module is a E-Commerce Module.</p>";
     }
 }
 /* End of file details.php */
