@@ -452,10 +452,10 @@ class Module_Pyrocart extends Module {
             $this->db->query($pyrocart_images)&&
 
             $this->db->insert('settings', $settings_pyrocart_currency) &&
-            $this->db->insert('settings', $settings_pyrocart_currency) &&
-            $this->db->insert('settings', $settings_pyrocart_currency) &&
-            $this->db->insert('settings', $settings_pyrocart_currency) &&
-            $this->db->insert('settings', $settings_pyrocart_currency) &&
+            $this->db->insert('settings', $settings_pyrocart_featured) &&
+            $this->db->insert('settings', $settings_pyrocart_handling_price) &&
+            $this->db->insert('settings', $settings_pyrocart_timer) &&
+            $this->db->insert('settings', $settings_pyrocart_weight) &&
 
             (is_dir('uploads/pyrocart') OR mkdir('uploads/pyrocart',0777,TRUE)) )
         {
