@@ -1,12 +1,13 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Productitem module
+ * Pyrocart module
  *
- * @author Phil Sturgeon - PyroCMS Dev Team
+ * @author James Lawrie
  * @package PyroCMS
- * @subpackage Productitem module
+ * @subpackage pyrocart module
  * @category Modules
  */
+
 class Admin extends Admin_Controller
 {
 	/**
@@ -25,71 +26,71 @@ class Admin extends Admin_Controller
 	public function __construct()
 	{
 		parent::Admin_Controller();
-		$this->load->model('products_m');
+		$this->load->model('pyrocart_m');
 		$this->load->model('images_m');
-		$this->lang->load('products');
-		$this->config->load('products_config');
+		$this->lang->load('pyrocart');
+		$this->config->load('pyrocart_config');
 
 		// Load and set the validation rules
 		$this->load->library('form_validation');
 		$this->validation_rules = array(
 			array(
 				'field' => 'title',
-				'label' => lang('products.title'),
+				'label' => lang('pyrocart.title'),
 				'rules'	=> 'trim|required'
 			),
 			array(
 				'field' => 'refNo',
-				'label' => lang('products.refNo'),
+				'label' => lang('pyrocart.refNo'),
 				'rules' => 'trim'
 			),
 			array(
 				'field' => 'price',
-				'label' => lang('products.price'),
+				'label' => lang('pyrocart.price'),
 				'rules' => 'trim|required'
 			),
 			array(
 				'field' => 'weight',
-				'label' => lang('products.weight'),
+				'label' => lang('pyrocart.weight'),
 				'rules' => 'trim'
 			),
                         array(
 				'field' => 'stock',
-				'label' => lang('products.stock'),
+				'label' => lang('pyrocart.stock'),
 				'rules' => 'trim|required'
 			),
 			array(
 				'field' => 'currency',
-				'label' => lang('products.currency'),
+				'label' => lang('pyrocart.currency'),
 				'rules' => 'trim'
 			),
 
 		 	array(
 				'field' => 'expire_date',
-				'label' => lang('products.expire_date'),
+				'label' => lang('pyrocart.expire_date'),
 				'rules' => 'trim'
 			),
 
 			array(
 				'field' => 'description',
-				'label' => lang('products.description'),
+				'label' => lang('pyrocart.description'),
 				'rules' => 'trim|required'
 			),
 
 			array(
 				'field' => 'categoryId',
-				'label' => lang('products.categoryId'),
+				'label' => lang('pyrocart.categoryId'),
 				'rules' => 'trim|required'
 			),
 
 			array(
 				'field' => 'featured',
-				'label' => lang('products.featured'),
+				'label' => lang('pyrocart.featured'),
 				'rules' => 'trim'
 			),
                         array(
 				'field' => 'external_url',
-				'label' => lang('products.external_url'),
+				'label' => lang('pyrocart.external_url'),
 				'rules' => 'trim'
 			)
 
@@ -100,12 +101,12 @@ class Admin extends Admin_Controller
 	}
 
 
-	// Admin: Show products
+	// Admin: Show pyrocart
 	function index()
 	{
 
 		$criterias = array(''=>'Select');
-			foreach($this->products_m->getCategories() as $criteria)
+			foreach($this->pyrocart_m->getCategories() as $criteria)
 			{
 				$criterias[$criteria->id] = $criteria->name;
 			}
@@ -113,13 +114,13 @@ class Admin extends Admin_Controller
 
 		$this->template->set_partial('filters', 'admin/partials/search_product_form');
 		// Create pagination links
-		$total_rows = $this->products_m->countProducts();
-		$this->data->pagination = create_pagination('admin/products/index', $total_rows);
+		$total_rows = $this->pyrocart_m->countpyrocart();
+		$this->data->pagination = create_pagination('admin/pyrocart/index', $total_rows);
 
 		// Using this data, get the relevant results
-		$this->data->products = $this->products_m->getProducts(array('order'=>'created_on DESC', 'limit' => $this->data->pagination['limit']));
+		$this->data->pyrocart = $this->pyrocart_m->getpyrocart(array('order'=>'created_on DESC', 'limit' => $this->data->pagination['limit']));
 		$this->template
-		->append_metadata( js('functions.js', 'products') )
+		->append_metadata( js('functions.js', 'pyrocart') )
 		->build('admin/index', $this->data);
 	}
 
@@ -135,18 +136,18 @@ class Admin extends Admin_Controller
 
 
 		$this->session->set_flashdata('success', sprintf('Successfully deleted image'));
-		redirect('admin/products/product_image_manage/'.$product_id);
+		redirect('admin/pyrocart/product_image_manage/'.$product_id);
 	}
 	function product_image_delete($product_id,$image_id){
 
-		$photo = $this->db->get_where('product_images',array('id'=>$image_id))->first_row();
+		$photo = $this->db->get_where('pyrocart_images',array('id'=>$image_id))->first_row();
 
 		$this->db->where('id',$image_id);
 		$this->db->delete('product_images');
-		@unlink(FCPATH.'/uploads/products/full/'.$photo->productImage);
-		@unlink(FCPATH.'/uploads/products/thumbs/'.$photo->productImageThumb);
+		@unlink(FCPATH.'/uploads/pyrocart/full/'.$photo->productImage);
+		@unlink(FCPATH.'/uploads/pyrocart/thumbs/'.$photo->productImageThumb);
 		$this->session->set_flashdata('success', sprintf('Successfully deleted image'));
-		redirect('admin/products/product_image_manage/'.$product_id);
+		redirect('admin/pyrocart/product_image_manage/'.$product_id);
 	}
 	function product_image_manage($product_id,$image_id='')
 		{
@@ -177,14 +178,14 @@ class Admin extends Admin_Controller
 						if ($this->images_m->uploadProductImage($product_id,$_POST))
 							{
 								$this->session->set_flashdata('success', sprintf('Successfully uploaded image %s', $this->input->post('name')));
-								redirect('admin/products/product_image_manage/'.$product_id);
+								redirect('admin/pyrocart/product_image_manage/'.$product_id);
 							}
 					}
 					if($image_id!=''){
 						if ($this->images_m->updateProductImage($image_id,$_POST))
 							{
 								$this->session->set_flashdata('success', sprintf('Successfully uploaded image %s', $this->input->post('name')));
-								redirect('admin/products/product_image_manage/'.$product_id);
+								redirect('admin/pyrocart/product_image_manage/'.$product_id);
 							}
 
 					}
@@ -233,10 +234,10 @@ class Admin extends Admin_Controller
 
 			if ($this->form_validation->run())
 			{
-				if ($this->products_m->editProduct($id,$_POST))
+				if ($this->pyrocart_m->editProduct($id,$_POST))
 				{
 					$this->session->set_flashdata('success', sprintf('Successfulle added product', $this->input->post('title')));
-					redirect('admin/products/index');
+					redirect('admin/pyrocart/index');
 				}
 				else
 				{
@@ -245,13 +246,13 @@ class Admin extends Admin_Controller
 			}
 
 			$criterias = array(''=>'Select');
-			foreach($this->products_m->getCategories() as $criteria)
+			foreach($this->pyrocart_m->getCategories() as $criteria)
 			{
 				$criterias[$criteria->id] = $criteria->name;
 			}
 			$this->data->categories = $criterias;
 			$this->data->currency = $this->config->item('currency_list');
-			$this->data->product = $this->products_m->getProduct($id);
+			$this->data->product = $this->pyrocart_m->getProduct($id);
 
 			if ($this->data->product)
 			{
@@ -264,7 +265,7 @@ class Admin extends Admin_Controller
 			}
 			else
 			{
-				redirect('admin/products');
+				redirect('admin/pyrocart');
 			}
 		}
 
@@ -274,11 +275,11 @@ class Admin extends Admin_Controller
 
 		if ($this->form_validation->run())
 		{
-			if ($this->products_m->newProduct($_POST))
+			if ($this->pyrocart_m->newProduct($_POST))
 			{
 
 				$this->session->set_flashdata('success', sprintf(lang('product_add_success'), $this->input->post('title')));
-				redirect('admin/products/index');
+				redirect('admin/pyrocart/index');
 			}
 			else
 			{
@@ -296,7 +297,7 @@ class Admin extends Admin_Controller
 
 
 		$categories = array(''=>'Select');
-		foreach($this->products_m->getCategories() as $criteria)
+		foreach($this->pyrocart_m->getCategories() as $criteria)
 		{
 			$categories[$criteria->id] = $criteria->name;
 		}
@@ -333,25 +334,25 @@ class Admin extends Admin_Controller
 		if ( empty($id_array) )
 		{
 			$this->session->set_flashdata('error', 'Please select advertisement first');
-			redirect('admin/products');
+			redirect('admin/pyrocart');
 		}
 
 		// Loop through each ID
 		foreach ( $id_array as $id)
 		{
 			if($this->input->post('makeSponsored')!=''){
-				$this->products_m->makeSponsored($id);
+				$this->pyrocart_m->makeSponsored($id);
 			}
 
 			if($this->input->post('removeSponsored')!=''){
-				$this->products_m->remvoeSponsored($id);
+				$this->pyrocart_m->remvoeSponsored($id);
 			}
 
 
 		}
 
 		$this->session->set_flashdata('success', lang('Successfully made the advertisement(s) sponsored'));
-		redirect('admin/products');
+		redirect('admin/pyrocart');
 	}
 
 
@@ -362,12 +363,12 @@ class Admin extends Admin_Controller
 
 	function delete($productid='')
 	{
-		if($productid==''){redirect('admin/products');}
+		if($productid==''){redirect('admin/pyrocart');}
 
 		$this->db->where('id', $productid);
-		$this->db->delete('products');
+		$this->db->delete('pyrocart');
 
-		redirect('admin/products');
+		redirect('admin/pyrocart');
 	}
 
 	function addProductCategory($id=FALSE)
@@ -383,7 +384,7 @@ class Admin extends Admin_Controller
 
 			array(
 				'field' => 'parentid',
-				'label' => lang('products.parentid'),
+				'label' => lang('pyrocart.parentid'),
 				'rules'	=> 'trim'
 			));
 
@@ -392,11 +393,11 @@ class Admin extends Admin_Controller
 
 		if ($this->form_validation->run())
 		{
-			if ($this->products_m->newProductCategory($_POST))
+			if ($this->pyrocart_m->newProductCategory($_POST))
 			{
 
 				$this->session->set_flashdata('success', sprintf(lang('category_add_success'), $this->input->post('name')));
-				redirect('admin/products/listCategories');
+				redirect('admin/pyrocart/listCategories');
 			}
 			else
 			{
@@ -406,7 +407,7 @@ class Admin extends Admin_Controller
 		}
 
 		if($id){$this->data->parentid=$id;}else{$this->data->parentid='';}
-		$this->data->categories = $this->products_m->makeCategoriesDropDown();
+		$this->data->categories = $this->pyrocart_m->makeCategoriesDropDown();
 
 
 		$this->template->build('admin/addProductCategory', $this->data);
@@ -415,12 +416,12 @@ class Admin extends Admin_Controller
 	function listCategories()
 		{
 
-			$total_rows = $this->products_m->countCategories();
-			$this->data->pagination = create_pagination('admin/products/listCategories', $total_rows);
+			$total_rows = $this->pyrocart_m->countCategories();
+			$this->data->pagination = create_pagination('admin/pyrocart/listCategories', $total_rows);
 
 			// Using this data, get the relevant results
-			$this->data->categories = $this->products_m->getProductCategories(array('limit' => $this->data->pagination['limit']));
-			$this->data->product_categories = $this->products_m->getParentCategories();
+			$this->data->categories = $this->pyrocart_m->getProductCategories(array('limit' => $this->data->pagination['limit']));
+			$this->data->product_categories = $this->pyrocart_m->getParentCategories();
 			$this->template->build('admin/listCategories', $this->data);
 
 		}
@@ -435,24 +436,24 @@ class Admin extends Admin_Controller
 		$fields = array(
 			array(
 				'field' => 'name',
-				'label' => lang('products.title'),
+				'label' => lang('pyrocart.title'),
 				'rules'	=> 'trim|required'
 			),
 
 			array(
 				'field' => 'parentid',
-				'label' => lang('products.parentid'),
+				'label' => lang('pyrocart.parentid'),
 				'rules'	=> 'trim'
 			));
 
 		$this->form_validation->set_rules($fields);
 		if ($this->form_validation->run())
 		{
-			if ($this->products_m->editProductCategory($criteriaId,$_POST))
+			if ($this->pyrocart_m->editProductCategory($criteriaId,$_POST))
 			{
 
 				$this->session->set_flashdata('success', sprintf(lang('criteria_edit_success'), $this->input->post('name')));
-				redirect('admin/products/listCategories');
+				redirect('admin/pyrocart/listCategories');
 			}
 			else
 			{
@@ -461,9 +462,9 @@ class Admin extends Admin_Controller
 			}
 		}
 
-		$this->data->categories = $this->products_m->makeCategoriesDropDown();
+		$this->data->categories = $this->pyrocart_m->makeCategoriesDropDown();
 
-		$this->data->criteria = $this->products_m->getProductCategory($criteriaId);
+		$this->data->criteria = $this->pyrocart_m->getProductCategory($criteriaId);
 
 		$this->template->build('admin/editProductCategory', $this->data);
 	}
