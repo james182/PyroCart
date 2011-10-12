@@ -20,9 +20,6 @@ Information TBA.
 
 ## Bugs & Feature Requests
 
-[Issue tracker](http://github.com/pyrocms/pyrocms/issues)
-[Forum](http://www.pyrocms.com/forums)
-
 Before reporting bugs or requesting any features, please check that it does not already exist.
 
 ## Thanks
