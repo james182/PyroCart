@@ -1,4 +1,4 @@
-# PyroCMS e-Commerce Module
+# PyroCart Module
 
 * Version: 1.0
 
