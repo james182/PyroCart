@@ -15,24 +15,24 @@ class Module_Pyrocart extends Module {
                     ),
                     'frontend' => TRUE,
                     'backend' => TRUE,
-                    'menu' => TRUE
+                    'menu' => 'PyroCart'
             );
     }
 
     public function install()
     {
-        $this->dbforge->drop_table('default_pyrocart');
-        $this->dbforge->drop_table('default_pyrocart_categories');
-        $this->dbforge->drop_table('default_pyrocart_images');
-        $this->dbforge->drop_table('default_pyrocart_orders');
-        $this->dbforge->drop_table('default_pyrocart_order_items');
-        $this->dbforge->drop_table('default_pyrocart_countries');
-        $this->dbforge->drop_table('default_pyrocart_shipping_fixed');
-        $this->dbforge->drop_table('default_pyrocart_shipping_weight');
-        $this->dbforge->drop_table('default_pyrocart_states');
+        $this->dbforge->drop_table('pyrocart');
+        $this->dbforge->drop_table('pyrocart_categories');
+        $this->dbforge->drop_table('pyrocart_images');
+        $this->dbforge->drop_table('pyrocart_orders');
+        $this->dbforge->drop_table('pyrocart_order_items');
+        $this->dbforge->drop_table('pyrocart_countries');
+        $this->dbforge->drop_table('pyrocart_shipping_fixed');
+        $this->dbforge->drop_table('pyrocart_shipping_weight');
+        $this->dbforge->drop_table('pyrocart_states');
 
         $pyrocart = "
-            CREATE TABLE `default_pyrocart` (
+            CREATE TABLE '".$this->db->dbprefix('pyrocart')."' (
                 `id` int(100) unsigned NOT NULL AUTO_INCREMENT,
                 `product_code` varchar(255) DEFAULT '',
                 `title` varchar(255) NOT NULL DEFAULT '',
@@ -54,7 +54,7 @@ class Module_Pyrocart extends Module {
         ";
 
         $pyrocart_categories = "
-            CREATE TABLE `default_pyrocart_categories` ( 
+            CREATE TABLE '".$this->db->dbprefix('pyrocart_categories')."' ( 
                 `id` int(11) NOT NULL AUTO_INCREMENT,
                 `name` varchar(255) NOT NULL,
                 `category_image` varchar(255) DEFAULT '',
@@ -65,7 +65,7 @@ class Module_Pyrocart extends Module {
         ";
 
         $pyrocart_images = "
-            CREATE TABLE `default_pyrocart_images` (
+            CREATE TABLE '".$this->db->dbprefix('pyrocart_images')."' (
                 `id` int(11) NOT NULL AUTO_INCREMENT,
                 `product_id` int(11) DEFAULT NULL,
                 `product_image` varchar(255) DEFAULT NULL,
@@ -78,7 +78,7 @@ class Module_Pyrocart extends Module {
         ";
 
         $pyrocart_orders ="
-            CREATE TABLE `default_pyrocart_orders` (
+            CREATE TABLE '".$this->db->dbprefix('pyrocart_orders')."' (
                 `id` int(11) NOT NULL AUTO_INCREMENT,
                 `status` varchar(255) DEFAULT NULL,
                 `firstname` varchar(255) DEFAULT NULL,
@@ -107,7 +107,7 @@ class Module_Pyrocart extends Module {
         ";
 
         $pyrocart_order_items ="
-            CREATE TABLE `default_pyrocart_order_items` (
+            CREATE TABLE '".$this->db->dbprefix('pyrocart_order_items')."' (
                 `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
                 `order_id` int(11) unsigned NOT NULL,
                 `product_id` int(11) unsigned DEFAULT NULL,
@@ -121,7 +121,7 @@ class Module_Pyrocart extends Module {
         ";
         
         $pyrocart_countries ="
-            CREATE TABLE `default_pyrocart_countries` (
+            CREATE TABLE '".$this->db->dbprefix('pyrocart_countries')."' (
                 `country_id` int(11) NOT NULL AUTO_INCREMENT,
                 `country` varchar(255) NOT NULL,
                 PRIMARY KEY (`country_id`)
@@ -129,7 +129,7 @@ class Module_Pyrocart extends Module {
         ";
         
         $pyrocart_states ="
-            CREATE TABLE `default_pyrocart_states` (
+            CREATE TABLE '".$this->db->dbprefix('pyrocart_states')."' (
                 `zone_id` int(11) NOT NULL AUTO_INCREMENT,
                 `country_id` int(11) NOT NULL,
                 `state` varchar(255) NOT NULL,
@@ -138,7 +138,7 @@ class Module_Pyrocart extends Module {
         ";
         
         $pyrocart_shipping_fixed ="
-            CREATE TABLE `default_pyrocart_shipping_fixed` (
+            CREATE TABLE '".$this->db->dbprefix('pyrocart_shipping_fixed')."' (
                 `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
                 `name` varchar(155) DEFAULT NULL,
                 `quantity` int(11) DEFAULT '0',
@@ -148,7 +148,7 @@ class Module_Pyrocart extends Module {
         ";
         
         $pyrocart_shipping_weight ="
-            CREATE TABLE `default_pyrocart_shipping_weight` (
+            CREATE TABLE '".$this->db->dbprefix('pyrocart_shipping_weight')."' (
                 `id` int(11) NOT NULL AUTO_INCREMENT,
                 `country_id` int(11) NOT NULL,
                 `name` varchar(255) NOT NULL,
@@ -252,14 +252,14 @@ class Module_Pyrocart extends Module {
 
     public function uninstall()
     {
-        if($this->dbforge->drop_table('default_pyrocart')&&
-            $this->dbforge->drop_table('default_pyrocart_categories')&&
-            $this->dbforge->drop_table('default_pyrocart_images')&&
-            $this->dbforge->drop_table('default_pyrocart_orders')&&
-            $this->dbforge->drop_table('default_pyrocart_order_items')&&
-            $this->dbforge->drop_table('default_pyrocart_countries')&&
-            $this->dbforge->drop_table('default_pyrocart_shipping_fixed')&&
-            $this->dbforge->drop_table('default_pyrocart_shipping_weight')&&
+        if($this->dbforge->drop_table('pyrocart')&&
+            $this->dbforge->drop_table('pyrocart_categories')&&
+            $this->dbforge->drop_table('pyrocart_images')&&
+            $this->dbforge->drop_table('pyrocart_orders')&&
+            $this->dbforge->drop_table('pyrocart_order_items')&&
+            $this->dbforge->drop_table('pyrocart_countries')&&
+            $this->dbforge->drop_table('pyrocart_shipping_fixed')&&
+            $this->dbforge->drop_table('pyrocart_shipping_weight')&&
             $this->dbforge->drop_table('default_pyrocart_states')&&
             $this->db->delete('settings', array('module' => 'Pyrocart')) )
         {
@@ -278,7 +278,7 @@ class Module_Pyrocart extends Module {
             // Return a string containing help info
             // You could include a file and return it here.
             return "<h4>Overview</h4>
-            <p>The Pyrocart module is a E-Commerce Module.</p>";
+            <p>The PyroCart module is an E-Commerce Module.</p>";
     }
 }
 /* End of file details.php */
