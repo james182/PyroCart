@@ -95,38 +95,6 @@ class Pyrocart extends Public_Controller
 
 	}
 
-	public function rate($productId='',$rate='')
-	{
-
-		$update = "update vote set counter = counter + 1, value = value + ".$rate." where product_id = $productId";
-
-		$res = $this->db->query($update);
-		//print_r($res);exit;
-		if($res==1){
-			$insert = "insert into vote (counter,value,product_id) values ('1','".$rate."',$productId)";
-			$result =$this->db->query($insert);
-		}
-
-	}
-
-	public function getrate($productId='')
-	{
-
-		$sql= "select * from vote where product_id = $productId";
-		$query=$this->db->query($sql);
-
-		// set width of star
-		$rating = 0;
-		if($query->num_rows()>0){
-			$row = $query->first_row();
-			$rating =  (@round($row->value/ $row->counter,1)) * 20;
-		}
-
-		echo $rating;
-		exit;
-
-	}
-
 
 
 
