@@ -21,7 +21,7 @@ class Orders_m extends CI_Model
 		if($s_name){$this->db->like('firstName',$s_name);$this->db->or_like('lastName',$s_name);}
 
 		$this->db->select('id');
-		$query = $this->db->get('product_orders');
+		$query = $this->db->get('pyrocart_orders');
 
 		return $query->num_rows();
 	}
@@ -43,7 +43,7 @@ class Orders_m extends CI_Model
 	if($s_name!=''){$this->db->like('firstName',$s_name);$this->db->or_like('lastName',$s_name);}
 
 
-		$query = $this->db->get('product_orders');
+		$query = $this->db->get('pyrocart_orders');
 
 		if ($query->num_rows() == 0)
 		{
@@ -57,7 +57,7 @@ class Orders_m extends CI_Model
 	}
 	function getOrderItems($order_id)
 		{
-			$query = $this->db->get_where('product_order_items',array('order_id'=>$order_id));
+			$query = $this->db->get_where('pyrocart_order_items',array('order_id'=>$order_id));
 			return $query->result();
 
 		}
@@ -66,7 +66,7 @@ class Orders_m extends CI_Model
 			$this->db->select('sum(quantity) as total_items');
 			$this->db->where('order_id',$order_id);
 			$this->db->group_by('order_id');
-			$query = $this->db->get('product_order_items');
+			$query = $this->db->get('pyrocart_order_items');
 			return $query->row()->total_items;
 
 
@@ -74,9 +74,9 @@ class Orders_m extends CI_Model
 	function createOrder()
 	{
 		$this->load->helper('date');
-		$DATA = $this->helpfunctions->make_insert_array('product_orders',$_REQUEST);
+		$DATA = $this->helpfunctions->make_insert_array('pyrocart_orders',$_REQUEST);
 		$DATA['created_on']=now();
-		$this->db->insert('product_orders', $DATA);
+		$this->db->insert('pyrocart_orders', $DATA);
 		$insertId = $this->db->insert_id();
 		return $insertId;
 	}
@@ -84,16 +84,16 @@ class Orders_m extends CI_Model
 	{
 		$this->load->helper('date');
 		$this->load->library('helpfunctions');
-		$DATA = $this->helpfunctions->make_insert_array('product_orders',$input);
+		$DATA = $this->helpfunctions->make_insert_array('pyrocart_orders',$input);
 		$this->db->where('id', $id);
-		$this->db->update('product_orders', $DATA);
+		$this->db->update('pyrocart_orders', $DATA);
 		return true;
 
 	}
 
 	function getOrder($id = '')
 		{
-				$query = $this->db->get_where('product_orders', array('id'=>$id));
+				$query = $this->db->get_where('pyrocart_orders', array('id'=>$id));
 				if ($query->num_rows() == 0)
 				{ return FALSE;	}
 				else{ return $query->row(); }
@@ -103,7 +103,7 @@ class Orders_m extends CI_Model
 
 	function process_inventory_stock($v_id,$qty)
 		{
-			$update_query = "UPDATE products SET stock = stock - $qty WHERE id = $v_id";
+			$update_query = "UPDATE pyrocart SET stock = stock - $qty WHERE id = $v_id";
 			$this->db->query($update_query);
 		}
 
@@ -123,7 +123,7 @@ class Orders_m extends CI_Model
 
 	 			$ORDER_DATA['subtotal'] = $items['subtotal'];
 	 			$ORDER_DATA['description'] = $items['name'];
-	 			$this->db->insert('product_order_items',$ORDER_DATA);
+	 			$this->db->insert('pyrocart_order_items',$ORDER_DATA);
 	 		}
 
 

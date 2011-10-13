@@ -5,7 +5,7 @@ $(function() {
 	});
 
 </script>
-<?php echo form_open_multipart('admin/products/create', 'class="crud"'); ?>
+<?php echo form_open_multipart('admin/pyrocart/create', 'class="crud"'); ?>
 
 	<ol>
 		<li class="<?php echo alternator('', 'even'); ?>">
@@ -15,8 +15,8 @@ $(function() {
 		</li>
 
 	    <li class="<?php echo alternator('', 'even'); ?>">
-				<label for="criteriaId">Category</label>
-				<?php echo form_dropdown('categoryId', $categories, ''); ?>
+				<label for="criteria_id">Category</label>
+				<?php echo form_dropdown('category_id', $categories, ''); ?>
 	    </li>
 
 	    <li class="<?php echo alternator('', 'even'); ?>">

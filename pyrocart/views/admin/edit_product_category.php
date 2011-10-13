@@ -1,6 +1,6 @@
 <h3><?php echo lang('products.add_criteria'); $this->load->model('products_m'); ?></h3>
 
-<?php echo form_open_multipart('admin/products/editProductCategory/'.$criteriaId, 'class="crud"'); ?>
+<?php echo form_open_multipart('admin/pyrocart/edit_product_category/'.$criteriaId, 'class="crud"'); ?>
 
 	<ol>
 
@@ -11,8 +11,8 @@
 		</li>
 
 		<li class="even">
-				<label for="parentid">Parent category</label>
-				<?php echo form_dropdown('parentid', $categories, $criteria->parentid); ?>
+				<label for="parent_id">Parent category</label>
+				<?php echo form_dropdown('parent_id', $categories, $criteria->parent_id); ?>
 	    </li>
 	</ol>
 	<div class="float-right">

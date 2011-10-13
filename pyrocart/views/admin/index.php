@@ -16,9 +16,8 @@
             <?php foreach ($products as $product_item): if($product_item->featured=='true'){$checked=true;}else{$checked=false;} ?>
                 <tr>
                     <td><?php echo $product_item->title; ?></td>
-
                     <td><?php echo anchor('admin/pyrocart/product_image_manage/'. $product_item->id	, 'Manage', 'class="product_image_upload"'); ?></td>
-                    <td><?php echo $product_item->price;?></td>
+                    <td>$<?php echo $product_item->price;?></td>
                     <td><?php echo $product_item->stock;?></td>
 
                     <td><?php 
@@ -34,8 +33,8 @@
                         ?>
                     </td>
                     <td>
-                        <?php echo anchor('admin/pyrocart/edit/' . $product_item->id, 'Edit'); ?>|
-                        <a href="<?php echo base_url().'pyrocart/details/' . $product_item->id; ?>" target="_blank">View</a>|
+                        <?php echo anchor('admin/pyrocart/edit/' . $product_item->id, 'Edit'); ?> |
+                        <a href="<?php echo base_url().'pyrocart/details/' . $product_item->id; ?>" target="_blank">View</a> |
                         <a href="<?php echo base_url().'admin/pyrocart/delete/' . $product_item->id; ?>" onclick="return confirm('Are you sure you want to delete this apartment?')">Delete</a>
                     </td>
                 </tr>

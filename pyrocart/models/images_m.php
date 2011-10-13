@@ -60,10 +60,10 @@ class Images_m extends CI_Model
 	function get_product_images($product_id,$main=0)
 		{
 
-			$query = $this->db->get_where('pyrocart_images',array('product_id'=>$product_id,'mainImage'=>$main));
+			$query = $this->db->get_where('pyrocart_images',array('product_id'=>$product_id,'main_image'=>$main));
 			if($main==1 and $query->num_rows()==0)
 				{
-					$query = $this->db->get_where('pyrocart_images',array('product_id'=>$product_id,'mainImage'=>0));
+					$query = $this->db->get_where('pyrocart_images',array('product_id'=>$product_id,'main_image'=>0));
 				}
 			return $query->result();
 
@@ -87,11 +87,11 @@ class Images_m extends CI_Model
 		for($i=0;$i<count($images_list);$i++)
 		{
 			$imageNo = $images_list[$i];
-			$upload_conf['upload_path'] 	= 'uploads/products/full';
+			$upload_conf['upload_path'] 	= 'uploads/pyrocart/full';
 
 
 			if($imageNo=='productImageThumb'){
-				$upload_conf['upload_path'] 	= 'uploads/products/thumbs';
+				$upload_conf['upload_path'] 	= 'uploads/pyrocart/thumbs';
 			}
 
 
@@ -109,7 +109,7 @@ class Images_m extends CI_Model
 					@unlink(FCPATH.'/uploads/products/full/'.$image->productImage);
 				}
 				if($overwrite&&$imageNo=='productImageThumb'){
-					@unlink(FCPATH.'/uploads/products/thumbs/'.$image->productImageThumb);
+					@unlink(FCPATH.'/uploads/pyrocart/thumbs/'.$image->productImageThumb);
 				}
 
 				$uploaded_data 	= $this->upload->data();
@@ -120,7 +120,7 @@ class Images_m extends CI_Model
 				if($insertId)
 						{
 							$this->db->where('id', $insertId);
-							$this->db->update('product_images', $DATA);
+							$this->db->update('pyrocart_images', $DATA);
 						}
 
 			}
@@ -134,7 +134,7 @@ class Images_m extends CI_Model
   	{
 
 
-  		$upload_conf['upload_path'] 	= 'uploads/products/thumbs';
+  		$upload_conf['upload_path'] 	= 'uploads/pyrocart/thumbs';
 		$upload_conf['allowed_types'] 	= $this->config->item('image_allowed_filetypes');
 		$upload_conf['file_name'] = $image;
 		$upload_conf['overwrite']=TRUE;

@@ -1,13 +1,14 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 /**
- * Productitems Module - Create and manage products
+ * Pyrocart module
  *
- * @author 	PyroCMS Development Team
- * @package 	PyroCMS
- * @subpackage 	Productitems
- * @category	Modules
+ * @author James Lawrie
+ * @package PyroCMS
+ * @subpackage pyrocart module
+ * @category Modules
  */
-class Products extends Public_Controller
+
+class Pyrocart extends Public_Controller
 {
 
 	/**
@@ -23,7 +24,7 @@ class Products extends Public_Controller
 		$this->lang->load('pyrocart');
 		$this->config->load('pyrocart_config');
 
-		$this->data->product_categories = $this->pyrocart_m->getParentCategories();
+		$this->data->product_categories = $this->pyrocart_m->get_parent_categories();
 		$this->data->cat_breadcrumb = '';
                 //$this->template->set_layout('store.html');
 		$this->template->set_partial('sidebar', 'partials/sidebar.php',$this->data);
@@ -40,11 +41,11 @@ class Products extends Public_Controller
 
 	public function index()
 	{
-            if($this->settings->products_featured == 1)
+            if($this->settings->pyrocart_featured == 1)
             {
                 //Enabled
                 $params['order']='created_on DESC';
-                $this->data->products = $this->pyrocart_m->getProducts($params,true);
+                $this->data->products = $this->pyrocart_m->get_products($params,true);
                 $this->data->cat_breadcrumb = 'Featured';
                 $this->data->total_result = count($this->data->products );
             }else{
@@ -53,10 +54,10 @@ class Products extends Public_Controller
                 $params['order']='created_on DESC';
                 $params['categoryid'] = $categoryid;
                 if($categoryid!=''){
-                    $this->data->cat_breadcrumb = $this->pyrocart_m->getCatBC($categoryid);
+                    $this->data->cat_breadcrumb = $this->pyrocart_m->get_cat_breadcrumb($categoryid);
                 }
 
-                $this->data->products = $this->products_m->getProducts($params);
+                $this->data->products = $this->pyrocart_m->get_products($params);
                 $this->data->total_result = count($this->data->products );
             }
             
@@ -68,28 +69,28 @@ class Products extends Public_Controller
             $params['order']='created_on DESC';
             $params['categoryid'] = $categoryid;
             if($categoryid!=''){
-                $this->data->cat_breadcrumb = $this->products_m->getCatBC($categoryid);
+                $this->data->cat_breadcrumb = $this->pyrocart_m->get_cat_breadcrumb($category_id);
             }
 
-            $this->data->products = $this->products_m->getProducts($params);
+            $this->data->products = $this->pyrocart_m->get_products($params);
             $this->data->total_result = count($this->data->products );
             $this->template->build('index', $this->data);
 	}
 
 
 
-	public function details($productId=false)
+	public function details($product_id=false)
 	{
-		if(!$productId){redirect('products');}
+		if(!$product_id){redirect('pyrocart');}
 
-		$this->data->product = $this->products_m->getProduct($productId);
-		$this->data->cat_breadcrumb = $this->products_m->getCatBC($this->data->product->categoryId);
+		$this->data->product = $this->pyrocart_m->get_product($product_id);
+		$this->data->cat_breadcrumb = $this->pyrocart_m->get_cat_breadcrumb($this->data->product->category_id);
 
 		$this->template
-		->append_metadata( js('jquery.countdown.min.js', 'products') )
-		->append_metadata( css('jquery.countdown.css', 'products') )
-		->append_metadata( js('jquery.colorbox-min.js', 'products') )
-		->append_metadata( css('colorbox.css', 'products') )
+		->append_metadata( js('jquery.countdown.min.js', 'pyrocart') )
+		->append_metadata( css('jquery.countdown.css', 'pyrocart') )
+		->append_metadata( js('jquery.colorbox-min.js', 'pyrocart') )
+		->append_metadata( css('colorbox.css', 'pyrocart') )
 		->build('details', $this->data);
 
 	}

@@ -9,6 +9,7 @@ $lang['pyrocart.list_orders']                           = 'List Orders';
 
 //Labels
 $lang['pyrocart.title']                                 = 'Title';
+$lang['pyrocart.images'] 				= 'Images';
 $lang['pyrocart.price'] 				= 'Price';
 $lang['pyrocart.currency'] 				= 'Currency';
 $lang['pyrocart.created'] 				= 'Created';

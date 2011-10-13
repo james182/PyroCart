@@ -10,8 +10,6 @@
 
 class Admin extends Admin_Controller
 {
-	private $validation_rules = array();
-
 	/**
 	 * Constructor method
 	 *
@@ -29,6 +27,7 @@ class Admin extends Admin_Controller
                 
 		// Load and set the validation rules
 		$this->load->library('form_validation');
+                
 		$this->validation_rules = array(
 			array(
 				'field' => 'title',
@@ -272,44 +271,39 @@ class Admin extends Admin_Controller
 	function create()
 	{
 
-		if ($this->form_validation->run())
-		{
-			if ($this->pyrocart_m->newProduct($_POST))
-			{
+            if ($this->form_validation->run())
+            {
+                if ($this->pyrocart_m->new_product($_POST))
+                {
 
-				$this->session->set_flashdata('success', sprintf(lang('product_add_success'), $this->input->post('title')));
-				redirect('admin/pyrocart/index');
-			}
-			else
-			{
+                    $this->session->set_flashdata('success', sprintf(lang('pyrocart_add_success'), $this->input->post('title')));
+                    redirect('admin/index');
+                }
+                else
+                {
+                    $this->session->set_flashdata(array('error'=> lang('pyrocart_add_error')));
+                }
+            }
 
-				$this->session->set_flashdata(array('error'=> lang('product_add_error')));
-			}
-		}
+            // Loop through each rule
+            foreach($this->validation_rules as $rule)
+            {
+                    $product->{$rule['field']} = $this->input->post($rule['field']);
+            }
 
-		// Loop through each rule
-		foreach($this->validation_rules as $rule)
-		{
-			$product->{$rule['field']} = $this->input->post($rule['field']);
-		}
-
-
-
-		$categories = array(''=>'Select');
-		foreach($this->pyrocart_m->get_categories() as $criteria)
-		{
-			$categories[$criteria->id] = $criteria->name;
-		}
-		$this->data->categories = $categories;
-
-		$this->data->currency = $this->settings->pyrocart_currency;
-
-
-		// Load WYSIWYG editor
-		$this->data->fields=$this->validation_rules;
-		$this->data->product =& $product;
-		$this->template->append_metadata( $this->load->view('fragments/wysiwyg', $this->data, TRUE) );
-		$this->template->build('admin/create', $this->data);
+            $categories = array(''=>'Select Category');
+            foreach($this->pyrocart_m->get_categories() as $criteria)
+            {
+                    $categories[$criteria->id] = $criteria->name;
+            }
+            
+            $this->data->categories = $categories;
+            $this->data->currency   = $this->settings->pyrocart_currency;
+            $this->data->fields     = $this->validation_rules;
+            $this->data->product    =& $product;
+            
+            $this->template->append_metadata( $this->load->view('fragments/wysiwyg', $this->data, TRUE) );
+            $this->template->build('admin/create', $this->data);
 	}
 
 
@@ -370,7 +364,7 @@ class Admin extends Admin_Controller
 		redirect('admin/pyrocart');
 	}
 
-	function add_product_category($id=FALSE)
+	function add_product_category($id = FALSE)
 	{
 		$this->load->library('form_validation');
 		$this->form_validation->_field_data=array();
@@ -392,21 +386,19 @@ class Admin extends Admin_Controller
 
 		if ($this->form_validation->run())
 		{
-			if ($this->pyrocart_m->new_product_category($_POST))
-			{
-
-                            $this->session->set_flashdata('success', sprintf(lang('category_add_success'), $this->input->post('name')));
+                    if ($this->pyrocart_m->new_product_category($_POST))
+                    {
+                        $this->session->set_flashdata('success', sprintf(lang('category_add_success'), $this->input->post('name')));
                             redirect('admin/pyrocart/list_categories');
-			}
-			else
-			{
-                            $this->session->set_flashdata(array('error'=> lang('pyrocart_add_error')));
-			}
+                    }
+                    else
+                    {
+                        $this->session->set_flashdata(array('error'=> lang('pyrocart_add_error')));
+                    }
 		}
 
-		if($id){$this->data->parent_id=$id;}else{$this->data->parent_id='';}
+		if($id){$this->data->parent_id = $id;}else{$this->data->parent_id = '';}
 		$this->data->categories = $this->pyrocart_m->make_categories_dropDown();
-
 
 		$this->template->build('admin/add_product_category', $this->data);
 	}
@@ -439,19 +431,19 @@ class Admin extends Admin_Controller
 			),
 
 			array(
-				'field' => 'parentid',
-				'label' => lang('pyrocart.parentid'),
+				'field' => 'parent_id',
+				'label' => lang('pyrocart.parent_id'),
 				'rules'	=> 'trim'
 			));
 
 		$this->form_validation->set_rules($fields);
 		if ($this->form_validation->run())
 		{
-			if ($this->pyrocart_m->editProductCategory($criteriaId,$_POST))
+			if ($this->pyrocart_m->edit_product_category($criteriaId,$_POST))
 			{
 
 				$this->session->set_flashdata('success', sprintf(lang('criteria_edit_success'), $this->input->post('name')));
-				redirect('admin/pyrocart/listCategories');
+				redirect('admin/pyrocart/list_categories');
 			}
 			else
 			{
@@ -460,11 +452,11 @@ class Admin extends Admin_Controller
 			}
 		}
 
-		$this->data->categories = $this->pyrocart_m->makeCategoriesDropDown();
+		$this->data->categories = $this->pyrocart_m->make_categories_dropDown();
 
-		$this->data->criteria = $this->pyrocart_m->getProductCategory($criteriaId);
+		$this->data->criteria = $this->pyrocart_m->get_product_category($criteriaId);
 
-		$this->template->build('admin/editProductCategory', $this->data);
+		$this->template->build('admin/edit_product_category', $this->data);
 	}
 
 
