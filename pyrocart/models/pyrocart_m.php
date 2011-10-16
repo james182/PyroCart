@@ -11,7 +11,7 @@ class Pyrocart_m extends CI_Model
         $this->config->load('pyrocart/pyrocart_config');
 
         $this->load->library('upload');
-        $this->load->library('image_lib');
+        //$this->load->library('image_lib');
         $this->load->library('cart');
     }
 
@@ -214,17 +214,16 @@ class Pyrocart_m extends CI_Model
 		return $query->num_rows();
 
 	}
-	function edit_product($id,$input = array())
+	function edit_product($id, $input = array())
 	{
 		$this->load->helper('date');
-		$this->load->library('helpfunctions');
-
-		$DATA = $this->helpfunctions->make_insert_array('pyrocart',$input);
-
+                
+		unset($input['btnAction']);
+                
 		$this->db->where('id', $id);
-		$this->db->update('pyrocart', $DATA);
-		$insertId = $id;
-		//$this->upload_image($input,$insertId,TRUE);
+		$this->db->update('pyrocart', $input);
+		$insert_id = $id;
+		//$this->upload_image($input,$insert_id,TRUE);
 
 		return TRUE;
 	}

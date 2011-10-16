@@ -13,7 +13,7 @@ class Cart_m extends CI_Model{
 	}
 // Function to retrieve an array with all product information
 	function retrieve_products(){
-		$query = $this->db->get('products');
+		$query = $this->db->get('pyrocart');
 		return $query->result_array();
 	}
 
@@ -73,7 +73,7 @@ class Cart_m extends CI_Model{
 		$qty = $this->input->post('quantity'); // Assign posted quantity to $qty
 
 		$this->db->where('id', $id); // Select where id matches the posted id
-		$query = $this->db->get('products', 1); // Select the products where a match is found and limit the query by 1
+		$query = $this->db->get('pyrocart', 1); // Select the products where a match is found and limit the query by 1
 
 
 
@@ -88,7 +88,7 @@ class Cart_m extends CI_Model{
                                         'id'      => $row->id,
                                         'qty'     => $qty,
                                         'price'   => $row->price,
-                                        'product_code'   => $row->refNo,
+                                        'product_code'   => $row->product_code,
                                         'weight'   => $row->weight,
                                         'name'    => $row->title
                                         );

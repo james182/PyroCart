@@ -24,7 +24,7 @@ class Cart extends Public_Controller
 		$this->lang->load('pyrocart');
 		$this->config->load('pyrocart_config');
 		$this->load->library('cart');
-		$this->data->product_categories = $this->products_m->getParentCategories();
+		$this->data->product_categories = $this->pyrocart_m->get_parent_categories();
 		$this->data->cat_breadcrumb = '';
                 //$this->template->set_layout('store.html');
 		$this->template->set_partial('sidebar', 'partials/sidebar.php',$this->data);

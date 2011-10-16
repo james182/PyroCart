@@ -82,7 +82,7 @@ class Images_m extends CI_Model
 			$image = $this->get_product_image($insertId);
 
 		}
-		$images_list = array('productImage','productImageThumb');
+		$images_list = array('product_image','product_image_thumb');
 
 		for($i=0;$i<count($images_list);$i++)
 		{
@@ -90,7 +90,7 @@ class Images_m extends CI_Model
 			$upload_conf['upload_path'] 	= 'uploads/pyrocart/full';
 
 
-			if($imageNo=='productImageThumb'){
+			if($imageNo=='product_image_thumb'){
 				$upload_conf['upload_path'] 	= 'uploads/pyrocart/thumbs';
 			}
 
@@ -105,11 +105,11 @@ class Images_m extends CI_Model
 
 			if ( $this->upload->do_upload($imageNo) )
 			{
-				if($overwrite&&$imageNo=='productImage'){
-					@unlink(FCPATH.'/uploads/products/full/'.$image->productImage);
+				if($overwrite&&$imageNo=='product_image'){
+					@unlink(FCPATH.'/uploads/pyrocart/full/'.$image->product_image);
 				}
-				if($overwrite&&$imageNo=='productImageThumb'){
-					@unlink(FCPATH.'/uploads/pyrocart/thumbs/'.$image->productImageThumb);
+				if($overwrite&&$imageNo=='product_image_thumb'){
+					@unlink(FCPATH.'/uploads/pyrocart/thumbs/'.$image->product_image_thumb);
 				}
 
 				$uploaded_data 	= $this->upload->data();

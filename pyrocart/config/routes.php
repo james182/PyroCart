@@ -23,10 +23,10 @@
 // Maintain admin routes
 
 
-$route['products/orders/admin(:any)?'] 	= 'admin_orders$1';
+$route['pyrocart/orders/admin(:any)?'] 	= 'admin_orders$1';
 
 
-$route['products/checkout(:any)'] 	= 'checkout$1';
-$route['products/checkout(:any)/(:num)'] 	= 'checkout$1/$2';
+$route['pyrocart/checkout(:any)'] 	= 'checkout$1';
+$route['pyrocart/checkout(:any)/(:num)'] 	= 'checkout$1/$2';
 
 ?>

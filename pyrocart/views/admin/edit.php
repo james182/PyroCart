@@ -5,7 +5,7 @@ $(function() {
 	});
 
 </script>
-<?php echo form_open_multipart('admin/products/edit/'.$product->id, 'class="crud"'); ?>
+<?php echo form_open_multipart('admin/pyrocart/edit/'.$product->id, 'class="crud"'); ?>
     <ol>
 		<li class="<?php echo alternator('', 'even'); ?>">
 			<label for="title">Product name</label>
@@ -14,13 +14,13 @@ $(function() {
 		</li>
 
 	    <li class="<?php echo alternator('', 'even'); ?>">
-				<label for="criteriaId">Category</label>
-				<?php echo form_dropdown('categoryId', $categories, ''); ?>
+				<label for="category_id">Category</label>
+				<?php echo form_dropdown('category_id', $categories, $product->category_id); ?>
 	    </li>
 
 	    <li class="<?php echo alternator('', 'even'); ?>">
-				<label for="refNo">Product Code</label>
-				<input type="text" id="refNo" name="refNo" maxlength="100" value="<?php echo $product->refNo; ?>" class="text" />
+				<label for="product_code">Product Code</label>
+				<input type="text" id="product_code" name="product_code" maxlength="100" value="<?php echo $product->product_code; ?>" class="text" />
 	    </li>
             
             <?php if($this->settings->products_featured == 1)

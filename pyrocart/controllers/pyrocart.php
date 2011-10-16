@@ -18,17 +18,18 @@ class Pyrocart extends Public_Controller
 	 */
 	public function __construct()
 	{
-		parent::Public_Controller();
-		$this->load->model('pyrocart_m');
-		$this->load->model('images_m');
-		$this->lang->load('pyrocart');
-		$this->config->load('pyrocart_config');
+            parent::Public_Controller();
+            $this->load->model('pyrocart_m');
+            $this->load->model('images_m');
+            $this->lang->load('pyrocart');
+            $this->config->load('pyrocart_config');
 
-		$this->data->product_categories = $this->pyrocart_m->get_parent_categories();
-		$this->data->cat_breadcrumb = '';
-                //$this->template->set_layout('store.html');
-		$this->template->set_partial('sidebar', 'partials/sidebar.php',$this->data);
-		$this->template->append_metadata( css('pyrocart.css', 'pyrocart') );
+            $this->data->product_categories = $this->pyrocart_m->get_parent_categories();
+            $this->data->cat_breadcrumb = '';
+                
+            //$this->template->set_layout('store.html');
+            $this->template->set_partial('sidebar', 'partials/sidebar.php',$this->data);
+            $this->template->append_metadata( css('pyrocart.css', 'pyrocart') );
 
 	}
 
@@ -64,11 +65,11 @@ class Pyrocart extends Public_Controller
             $this->template->build('index', $this->data);
 
 	}
-	public function search($categoryid = '')
+	public function search($category_id = '')
 	{
             $params['order']='created_on DESC';
             $params['categoryid'] = $categoryid;
-            if($categoryid!=''){
+            if($category_id!=''){
                 $this->data->cat_breadcrumb = $this->pyrocart_m->get_cat_breadcrumb($category_id);
             }
 
@@ -79,7 +80,7 @@ class Pyrocart extends Public_Controller
 
 
 
-	public function details($product_id=false)
+	public function details($product_id = false)
 	{
 		if(!$product_id){redirect('pyrocart');}
 
@@ -94,9 +95,6 @@ class Pyrocart extends Public_Controller
 		->build('details', $this->data);
 
 	}
-
-
-
 
 }
 ?>

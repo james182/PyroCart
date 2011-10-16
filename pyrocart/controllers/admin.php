@@ -226,46 +226,44 @@ class Admin extends Admin_Controller
 
 
 
-// Admin: edit a Productitem
+// Admin: Edit a product
 	function edit($id = 0)
-		{
+        {
+            if ($this->form_validation->run())
+            {
+                if ($this->pyrocart_m->edit_product($id,$_POST))
+                {
+                    $this->session->set_flashdata('success', sprintf('Successfully added product', $this->input->post('title')));
+                    redirect('admin/pyrocart/index');
+                }
+                else
+                {
+                    $this->session->set_flashdata(array('error'=> lang('product_add_error')));
+                }
+            }
 
-			if ($this->form_validation->run())
-			{
-				if ($this->pyrocart_m->editProduct($id,$_POST))
-				{
-					$this->session->set_flashdata('success', sprintf('Successfulle added product', $this->input->post('title')));
-					redirect('admin/pyrocart/index');
-				}
-				else
-				{
-					$this->session->set_flashdata(array('error'=> lang('product_add_error')));
-				}
-			}
+            $criterias = array(''=>'Select');
+            foreach($this->pyrocart_m->get_categories() as $criteria)
+            {
+                $criterias[$criteria->id] = $criteria->name;
+            }
+            $this->data->categories = $criterias;
+            $this->data->currency   = $this->config->item('currency_list');
+            $this->data->product    = $this->pyrocart_m->get_product($id);
 
-			$criterias = array(''=>'Select');
-			foreach($this->pyrocart_m->getCategories() as $criteria)
-			{
-				$criterias[$criteria->id] = $criteria->name;
-			}
-			$this->data->categories = $criterias;
-			$this->data->currency = $this->config->item('currency_list');
-			$this->data->product = $this->pyrocart_m->getProduct($id);
-
-			if ($this->data->product)
-			{
-
-				// Load WYSIWYG editor
-				$this->data->fields=$this->validation_rules;
-				//$this->data->productitem =& $productitem;
-				$this->template->append_metadata( $this->load->view('fragments/wysiwyg', $this->data, TRUE) );
-				$this->template->build('admin/edit', $this->data);
-			}
-			else
-			{
-				redirect('admin/pyrocart');
-			}
-		}
+            if ($this->data->product)
+            {
+                // Load WYSIWYG editor
+                $this->data->fields=$this->validation_rules;
+                //$this->data->productitem =& $productitem;
+                $this->template->append_metadata( $this->load->view('fragments/wysiwyg', $this->data, TRUE) );
+                $this->template->build('admin/edit', $this->data);
+            }
+            else
+            {
+                redirect('admin/pyrocart');
+            }
+        }
 
 	// Admin: Create a new Product
 	function create()
