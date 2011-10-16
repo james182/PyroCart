@@ -1,4 +1,4 @@
-<h3><?php echo lang('products.add_criteria'); $this->load->model('products_m'); ?></h3>
+<h3><?php echo lang('products.add_criteria'); $this->load->model('pyrocart_m'); ?></h3>
 
 <?php echo form_open_multipart('admin/pyrocart/edit_product_category/'.$criteriaId, 'class="crud"'); ?>
 

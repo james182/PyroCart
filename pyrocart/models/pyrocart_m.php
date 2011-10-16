@@ -189,21 +189,21 @@ class Pyrocart_m extends CI_Model
 		$s_category = $this->input->get_post('s_category');
 
 		if($s_category){
-			if(isset($s_category))
-					{
-						 $childs = $this->getChildCategories($s_category);
-						 $child_in = array($s_category);
-						 if($childs){
-						 	foreach($childs as $child){array_push($child_in,$child->id);}
-						 }
+                    if(isset($s_category))
+                    {
+                             $childs = $this->getChildCategories($s_category);
+                             $child_in = array($s_category);
+                             if($childs){
+                                    foreach($childs as $child){array_push($child_in,$child->id);}
+                             }
 
-						foreach($child_in as $cc){
-							 $this->db->or_where(array('products.categoryId'=>$cc));
-						}
+                            foreach($child_in as $cc){
+                                     $this->db->or_where(array('products.categoryId'=>$cc));
+                            }
 
-					}
+                    }
 
-			}
+                }
 
 		$s_name = $this->input->get_post('s_name');
 		if($s_name){$this->db->like('title',$s_name);}
@@ -243,27 +243,25 @@ class Pyrocart_m extends CI_Model
 	}
 
 
-	function new_product_category($input = array())
+	function new_product_category()
 	{
-		unset($input['btnAction']);
-		
-                $this->db->insert('pyrocart_categories', $input);
+            $set_name       = $this->input->post('name');
+            $set_parent_id  = $this->input->post('parent_id');
+            
+            $this->db->insert('pyrocart_categories', array('name'=>$set_name, 'parent_id'=>$set_parent_id));
 
-		$insert_id = $this->db->insert_id();
-		return $insert_id;
+            $insert_id = $this->db->insert_id();
+            return $insert_id;
 	}
         
-	function edit_product_category($id,$input = array())
+	function edit_product_category($id)
 	{
-		$this->load->helper('date');
-		$this->load->library('helpfunctions');
+            $set_name       = $this->input->post('name');
+            $set_parent_id  = $this->input->post('parent_id');
 
-		$DATA = $this->helpfunctions->make_insert_array('pyrocart_categories',$input);
-
-		$this->db->where('id', $id);
-		$this->db->update('pyrocart_categories', $DATA);
-		return true;
-
+            $this->db->where('id', $id);
+            $this->db->update('pyrocart_categories', array('name'=>$set_name, 'parent_id'=>$set_parent_id));
+            return true;
 	}
 
 	function make_categories_dropDown()
@@ -276,7 +274,7 @@ class Pyrocart_m extends CI_Model
             else
             {
 
-                $data  = array(''=>'Select');
+                $data  = array('0'=>'Select');
                 foreach($query->result() as $row)
                 {
 
@@ -314,33 +312,33 @@ class Pyrocart_m extends CI_Model
 	}
 
 	function get_parent_categories()
-		{
+        {
 
-			$this->db->where(array('parent_id IS NULL'=>NULL));
-			$query = $this->db->get('pyrocart_categories');
+            $this->db->where(array('parent_id'=>'0'));
+            $query = $this->db->get('pyrocart_categories');
 
-		     if ($query->num_rows() == 0)
-				{
-					return array();
-				}
-				else
-				{
-					return $query->result();
-				}
-		}
+            if ($query->num_rows() == 0)
+            {
+                    return array();
+            }
+            else
+            {
+                    return $query->result();
+            }
+        }
 
 	function get_product_category($id = '')
-		{
-				$query = $this->db->get_where('pyrocart_categories', array('id'=>$id));
-				if ($query->num_rows() == 0)
-				{
-					return FALSE;
-				}
-				else
-				{
-					return $query->row();
-				}
-		}
+        {
+            $query = $this->db->get_where('pyrocart_categories', array('id'=>$id));
+            if ($query->num_rows() == 0)
+            {
+                    return FALSE;
+            }
+            else
+            {
+                    return $query->row();
+            }
+        }
 
 	function isFeasibleForThumb( $filename ){
 		    $imageInfo = getimagesize($filename);
