@@ -227,19 +227,22 @@ class Pyrocart_m extends CI_Model
 
 		return TRUE;
 	}
+	
 	function new_product($input = array())
 	{
-            $this->load->helper('date');
+        $this->load->helper('date');
+        
+		$input = array_slice($input,1,-1);
+        $input['created_on'] = now();
 		
-            $this->data['created_on'] = now();
-            $this->data['input'] = $input;
-            $this->db->insert('pyrocart', $this->data);
-
-            $insertId = $this->db->insert_id();
-
-            //$this->upload_image($input,$insertId);
-
-            return $insertId;
+        $this->db->insert('pyrocart', $input);
+				
+        if($insertId = $this->db->insert_id()){
+        	//$this->upload_image($input,$insertId);
+        	return $insertId;
+        }else{
+        	return false;
+        };
 	}
 
 

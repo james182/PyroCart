@@ -27,6 +27,7 @@ Before reporting bugs or requesting any features, please check that it does not 
 ### Contributors
 
 * ekoisa
+* [Gary Hussey] (http://bossninja.com/)
  
 feel free to contribute to this module to make it the best e-Commerce module for PyroCMS
 
