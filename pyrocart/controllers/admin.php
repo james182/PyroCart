@@ -273,7 +273,7 @@ class Admin extends Admin_Controller
             {
                 if ($this->pyrocart_m->new_product($_POST))
                 {
-                    $this->session->set_flashdata('success', sprintf(lang('pyrocart_add_success'), $this->input->post('title')));
+                    $this->session->set_flashdata('success', sprintf($this->lang->line('product_create_success'), $this->input->post('title')));
                     redirect('admin/pyrocart');
                 }
                 else
