@@ -1,9 +1,13 @@
 <h3><?php echo lang('products.add_title'); ?></h3>
-<script>
-$(function() {
-		$( "#datepicker" ).datepicker();
+<script type="text/javascript">
+(function($){
+	$(document).ready(function(){
+		$("#datepicker").datepicker();
+		$("#price").change(function(){
+			this.value = this.value.replace(/[^0-9\.,]+/g,'');
+		});
 	});
-
+})(jQuery);
 </script>
 <?php echo form_open_multipart('admin/pyrocart/create', 'class="crud"'); ?>
 	<div class="float-right">
@@ -60,7 +64,7 @@ $(function() {
             
             <li class="<?php echo alternator('', 'even'); ?>">
                     <label for="title">Description</label><br /><br />
-                    <?php echo form_textarea(array('id'=>'description', 'name'=>'description', 'value' => htmlentities(stripslashes($product->description)), 'rows' => 40, 'class'=>'wysiwyg-advanced')); ?>
+                    <?php echo form_textarea(array('id'=>'description', 'name'=>'description', 'value' => html_entity_decode($product->description), 'rows' => 50, 'class'=>'wysiwyg-advanced')); ?>
             </li>
 	</ol>
 
