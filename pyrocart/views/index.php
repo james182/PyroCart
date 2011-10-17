@@ -15,7 +15,7 @@
                                     <li class="contentContainerMain green"><?php echo anchor('pyrocart/search/' . $cat2->id,$cat2->name); ?>
 
 
-                                    <?php $childs2 = $this->pyrocart_m->getChildCategories($cat2->id);?>
+                                    <?php $childs2 = $this->pyrocart_m->get_child_categories($cat2->id);?>
 
                                     <?php if($childs2):?>
 
@@ -74,7 +74,7 @@
                         <img width="130px" src="{pyro:url:base}uploads/pyrocart/thumbs/<?php echo $image[0]->product_image_thumb?>" alt="" />
                     </div>
                 <?php else:?>
-                    <img src="{pyro:url:base}addons/modules/pyrocart/img/product.jpg" alt="" />
+                    <img src="{pyro:url:base}addons/default/modules/pyrocart/img/product.jpg" alt="" />
                 <?php endif;?>
                 
                 <?php if($product->stock<=0):?>
@@ -104,7 +104,7 @@
                     <input type="hidden" name="product_id" value="<?php echo $product->id; ?>"/>
                     
                     <?php if($product->external_url): ?>
-                        <a href="<?php echo $product->external_url; ?>" target="_blank"><img src="{pyro:url:base}addons/modules/pyrocart/img/external.jpg" /></a>
+                        <a href="<?php echo $product->external_url; ?>" target="_blank"><img src="{pyro:url:base}addons/default/modules/pyrocart/img/external.jpg" /></a>
                     <?php else: ?>
                         <?php if($product->stock > 0): ?>
                                 <input  name="addtocart" type="image" src="{pyro:url:base}addons/default/modules/pyrocart/img/cart.jpg" />

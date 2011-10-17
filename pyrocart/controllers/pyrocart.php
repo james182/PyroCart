@@ -68,7 +68,7 @@ class Pyrocart extends Public_Controller
 	public function search($category_id = '')
 	{
             $params['order']='created_on DESC';
-            $params['categoryid'] = $categoryid;
+            $params['categoryid'] = $category_id;
             if($category_id!=''){
                 $this->data->cat_breadcrumb = $this->pyrocart_m->get_cat_breadcrumb($category_id);
             }

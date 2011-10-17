@@ -10,7 +10,7 @@
     ?>
     
     
-    <?php echo form_open('products/cart/update_cart'); ?>
+    <?php echo form_open('pyrocart/cart/update_cart'); ?>
     <table class="cart" width="100%" cellpadding="0" cellspacing="0">
         <tr class="borderbottom">
             <td>Qty</td>
@@ -62,14 +62,14 @@
             <td colspan="5">
                 <div id="actions">
                     <div class="btn_empty leftStyle">
-                        <?php echo anchor('products/cart/empty_cart', 'Empty Cart', 'class="empty"');?>
+                        <?php echo anchor('pyrocart/cart/empty_cart', 'Empty Cart', 'class="empty"');?>
                     </div>
                     
                     <div class="checkout rightStyle">
-                        <div class="btn_shop"><a href="{pyro:url:base}products/">Continue Shopping</a></div>
+                        <div class="btn_shop"><a href="{pyro:url:base}pyrocart/">Continue Shopping</a></div>
                         <div class="btn_checkout">
-                            <a href="{pyro:url:base}products/paypal/form/">
-                            <input type="button" name="checkout" style="width:112px; height:30px; border:0px; background:url('{pyro:url:base}addons/modules/products/img/checkout.jpg')" value="" >
+                            <a href="{pyro:url:base}pyrocart/paypal/form/">
+                            <input type="button" name="checkout" style="width:112px; height:30px; border:0px; background:url('{pyro:url:base}addons/default/modules/pyrocart/img/checkout.jpg')" value="" >
                             </a>
                         </div>
                     </div>
@@ -80,9 +80,9 @@
     </table>
     
     <!--
-    <p><?php echo form_submit('', 'Update your Cart'); echo anchor('products/cart/empty_cart', 'Empty Cart', 'class="empty"');
+    <p><?php echo form_submit('', 'Update your Cart'); echo anchor('pyrocart/cart/empty_cart', 'Empty Cart', 'class="empty"');
     echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-    echo anchor('products/paypal/form/', 'CHECKOUT', 'class="checkout"');
+    echo anchor('pyrocart/paypal/form/', 'CHECKOUT', 'class="checkout"');
     ?></p>
 
     <p><small>If the quantity is set to zero, the item will be removed from the cart.</small></p>

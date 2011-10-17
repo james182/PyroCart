@@ -28,7 +28,7 @@ class Paypal extends Public_Controller {
 		$this->lang->load('pyrocart');
 		$this->config->load('pyrocart_config');
 
-		$this->data->product_categories = $this->pyrocart_m->getParentCategories();
+		$this->data->product_categories = $this->pyrocart_m->get_parent_categories();
 		$this->data->cat_breadcrumb = '';
                 //$this->template->set_layout('pyrocart.html');
 		$this->template->set_partial('sidebar', 'partials/sidebar.php',$this->data);
@@ -75,11 +75,11 @@ class Paypal extends Public_Controller {
 	{
             $this->load->library('cart');
             $total_amount =  $this->cart->format_number($this->cart->total());
-            $this->paypallib->add_field('business', 'tareq._1278301111_biz@gmail.com');
+            $this->paypallib->add_field('business', 'sandbox@email.com');
 	    
-            $this->paypallib->add_field('return', site_url('products/paypal/success'));
-	    $this->paypallib->add_field('cancel_return', site_url('products/paypal/cancel'));
-	    $this->paypallib->add_field('notify_url', site_url('products/paypal/ipn')); // <-- IPN url
+            $this->paypallib->add_field('return', site_url('pyrocart/paypal/success'));
+	    $this->paypallib->add_field('cancel_return', site_url('pyrocart/paypal/cancel'));
+	    $this->paypallib->add_field('notify_url', site_url('pyrocart/paypal/ipn')); // <-- IPN url
 	    $this->paypallib->add_field('custom', '1234567890'); // <-- Verify return
 
 	    $this->paypallib->add_field('item_name', 'Paypal Test Transaction');
@@ -99,11 +99,11 @@ class Paypal extends Public_Controller {
             $this->data->cart_contents = $this->cart->contents();
 
             $this->template
-                    ->append_metadata( css('smart_wizard.css', 'products') )
-                    ->append_metadata( css('checkout.css', 'products') )
-                    ->append_metadata( js('jquery.smartWizard-2.0.min.js', 'products') )
-                    ->append_metadata( js('jquery.chained.mini.js', 'products') )
-                    ->append_metadata( js('checkout.js', 'products') )
+                    ->append_metadata( css('smart_wizard.css', 'pyrocart') )
+                    ->append_metadata( css('checkout.css', 'pyrocart') )
+                    ->append_metadata( js('jquery.smartWizard-2.0.min.js', 'pyrocart') )
+                    ->append_metadata( js('jquery.chained.mini.js', 'pyrocart') )
+                    ->append_metadata( js('checkout.js', 'pyrocart') )
                     ->build('paypal/form', $this->data);
 
 
@@ -112,9 +112,9 @@ class Paypal extends Public_Controller {
 	public function auto_form()
 	{
 		$this->paypallib->add_field('business', 'PAYPAL@EMAIL.COM');
-	    $this->paypallib->add_field('return', site_url('products/paypal/success'));
-	    $this->paypallib->add_field('cancel_return', site_url('products/paypal/cancel'));
-	    $this->paypallib->add_field('notify_url', site_url('products/paypal/ipn')); // <-- IPN url
+	    $this->paypallib->add_field('return', site_url('pyrocart/paypal/success'));
+	    $this->paypallib->add_field('cancel_return', site_url('pyrocart/paypal/cancel'));
+	    $this->paypallib->add_field('notify_url', site_url('pyrocart/paypal/ipn')); // <-- IPN url
 	    $this->paypallib->add_field('custom', '1234567890'); // <-- Verify return
 
 	    $this->paypallib->add_field('item_name', 'Paypal Test Transaction');
@@ -159,7 +159,7 @@ class Paypal extends Public_Controller {
 		// in the ipn_data() array.
 
 		// For this example, we'll just email ourselves ALL the data.
-		$to    = 'tareq.mist@gmail.com';    //  your email
+		$to    = 'your@email.com';    //  your email
 
 		if ($this->paypallib->validate_ipn())
 		{

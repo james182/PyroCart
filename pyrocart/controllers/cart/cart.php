@@ -79,7 +79,7 @@ class Cart extends Public_Controller
 
 	function empty_cart(){
 		$this->cart->destroy();
-		redirect('products/cart/show_cart');
+		redirect('pyrocart/cart/show_cart');
 	}
 
 	public function cart_checkout()
