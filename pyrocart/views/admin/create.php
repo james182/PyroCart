@@ -68,7 +68,7 @@
             </li>
 	</ol>
 
-	<div class="float-right">
+	<div class="buttons align-right padding-top">
 		<?php $this->load->view('admin/partials/buttons', array('buttons' => array('save', 'cancel') )); ?>
 	</div>
 <?php echo form_close(); ?>
