@@ -15,7 +15,7 @@
 				<?php echo form_dropdown('parent_id', $categories, $criteria->parent_id); ?>
 	    </li>
 	</ol>
-	<div class="float-right">
+	<div class="buttons align-right padding-top">
 		<?php $this->load->view('admin/partials/buttons', array('buttons' => array('save', 'cancel') )); ?>
 	</div>
 <?php echo form_close(); ?>
