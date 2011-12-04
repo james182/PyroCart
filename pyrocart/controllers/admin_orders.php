@@ -24,7 +24,8 @@ class Admin_orders extends Admin_Controller
 	 */
 	public function __construct()
 	{
-		parent::Admin_Controller();
+		//parent::Admin_Controller();
+		parent::__construct();
 		$this->load->model('pyrocart_m');
 		$this->load->model('images_m');
 		$this->load->model('orders_m');
