@@ -10,7 +10,8 @@ class checkout extends Public_Controller
      */
     public function __construct()
     {
-            parent::Public_Controller();
+            //parent::Public_Controller();
+            parent::__construct();
             $this->config->load('paypal_constants');
             $this->load->model('orders_m');
             $this->load->model('checkout_m');
