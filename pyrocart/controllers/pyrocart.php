@@ -18,7 +18,8 @@ class Pyrocart extends Public_Controller
 	 */
 	public function __construct()
 	{
-            parent::Public_Controller();
+            //parent::Public_Controller();
+            parent::__construct();
             $this->load->model('pyrocart_m');
             $this->load->model('images_m');
             $this->lang->load('pyrocart');
