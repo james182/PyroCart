@@ -18,7 +18,9 @@ class Admin extends Admin_Controller
 	 */
 	public function __construct()
 	{
-		parent::Admin_Controller();
+		//parent::Admin_Controller(); produces Fatal error: Call to undefined method Admin_Controller::Admin_Controller() 
+		parent::__construct();
+		
                 
 		$this->load->model('pyrocart_m');
 		$this->load->model('images_m');
