@@ -32,3 +32,5 @@ Before reporting bugs or requesting any features, please check that it does not 
 feel free to contribute to this module to make it the best e-Commerce module for PyroCMS
 
 Think you should be on this list? Add yourself in the next pull request you submit.
+
+## Needed developers to take over and finish it, as i don't have the time.
